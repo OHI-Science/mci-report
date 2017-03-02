@@ -1,0 +1,105 @@
+---
+title: "Regional Cumulative Impacts"
+author: "Jamie Afflerbach"
+date: "2/28/2017"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(message=F,warning=F)
+
+library(rgdal)
+library(dplyr)
+library(raster)
+
+wgs_crs <- CRS("+proj=longlat +datum=WGS84 +no_defs +ellps=WGS84 +towgs84=0,0,0")
+
+# set the mazu data_edit share based on operating system
+dir_M             <- c('Windows' = '//mazu.nceas.ucsb.edu/ohi',
+                       'Darwin'  = '/Volumes/ohi',    ### connect (cmd-K) to smb://mazu/ohi
+                       'Linux'   = '/home/shares/ohi')[[ Sys.info()[['sysname']] ]]
+
+ocean = raster(file.path(dir_M,'model/GL-NCEAS-Halpern2008/tmp/ocean.tif'))%>%
+          crop(.,extent(-18040095,18040134,0,9020067))
+
+writeRaster(ocean,filename = file.path(dir_M,'git-annex/mci-report/ocean_half.tif'))
+
+```
+
+```{r rgn_shapefiles}
+
+bc  = readOGR('shapefiles','ohibc_rgn')%>%
+      spTransform(CRS("+proj=moll +lon_0=0 +x_0=0 +y_0=0 +ellps=WGS84 +units=m +no_defs"))
+ne  = readOGR('shapefiles','ohine_rgn')%>%
+      spTransform(CRS("+proj=moll +lon_0=0 +x_0=0 +y_0=0 +ellps=WGS84 +units=m +no_defs"))
+
+mci_rgns = readOGR(dsn = file.path(dir_M,'git-annex/mci-report/shapefiles'),layer = 'mci_rgns')%>%
+    spTransform(CRS("+proj=moll +lon_0=0 +x_0=0 +y_0=0 +ellps=WGS84 +units=m +no_defs"))
+
+```
+
+```{r chi_data}
+
+#read in from Mazu location: marine_threats/impact_layers_2013_redo/global_impact_model_2013/normalized_by_two_time_periods/averaged_by_num_ecosystems/by_threat
+
+layers <- list.files(file.path(dir_M,'marine_threats/impact_layers_2013_redo/global_impact_model_2013/normalized_by_two_time_periods/averaged_by_num_ecosystems/by_threat'),full.names=T, pattern = '.tif$')[c(1:5,7,9:12,14,15)]
+
+```
+
+Iterate through each shapefile + pressure layer, clip out region, summary stats
+
+We probably want to save maps for each region + layer. Maybe we can do it by region?
+
+```{r clip}
+
+rng <- raster(layer)%>%
+        crop(ocean)%>%
+        mask(usa_shp)
+
+library(purrr)
+
+getvals <- function(layer){
+  
+  vals = raster(layer)%>%
+          crop(ocean)%>%
+          raster::extract(mci_rgns,method = 'simple',progress='text')%>%
+          setNames(usa_shp@data$rgn_nam)
+  
+return(vals)
+}
+
+#list of all values within each region for each pressure
+mci_prs_vals = map(layers,getvals)%>%
+               setNames(basename(layers))
+
+  
+  #vals is the list, let's try to use map to calculate mean, max
+  
+  map(vals,mean,na.rm=T)
+
+
+
+  for (i in 1:12){
+    set all values != i <- NA
+    trim()
+    for (j in 1:15){
+    crop(pressure,trimmedraster)
+    zonal
+    }
+  
+}
+
+mean score per region per layer
+
+
+```
+
+Try to answer the questions:
+
+1) Where is each threat the greatest?
+- Look at maximum number, NON area weighted, across threats
+
+2) What threats are greatest in each region?
+
+
+
