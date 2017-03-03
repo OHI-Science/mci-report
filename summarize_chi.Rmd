@@ -8,6 +8,9 @@ output: html_document
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(message=F,warning=F)
 
+options(scipen = 999,
+        digits = 4)
+
 library(rgdal)
 library(dplyr)
 library(raster)
@@ -63,33 +66,143 @@ getvals <- function(layer){
   vals = raster(layer)%>%
           crop(ocean)%>%
           raster::extract(mci_rgns,method = 'simple',progress='text')%>%
-          setNames(usa_shp@data$rgn_nam)
+          setNames(mci_rgns@data$rgn_nam)
   
 return(vals)
 }
 
 #list of all values within each region for each pressure
 mci_prs_vals = map(layers,getvals)%>%
-               setNames(basename(layers))
+               setNames(basename(layers))%>%
+               setNames(str_replace(names(.),"_combo.tif",""))
 
-  
+  save(mci_prs_vals, file=file.path(dir_M,"git-annex/mci-report/rgn_prs_values.RData"))
   #vals is the list, let's try to use map to calculate mean, max
   
-  map(vals,mean,na.rm=T)
+  load(file.path(dir_M,"git-annex/mci-report/rgn_prs_values.RData"))
+```
+
+```{r}
+
+# Get quantiles for each pressure layer
 
 
-
-  for (i in 1:12){
-    set all values != i <- NA
-    trim()
-    for (j in 1:15){
-    crop(pressure,trimmedraster)
-    zonal
-    }
+quant_func <- function(layer){
   
+    vec<-unlist(layer)
+    q = quantile(vec,probs = c(0.025,0.25,0.5,0.75,0.975))
+    
+    return(q)
 }
+library(data.table)
+library(stringr)
+#quants is a list of length 12, one for each pressure layer. Each layer has 5 quantiles
+quants = map(mci_prs_vals,quant_func)
+q = quants%>%
+      as.data.frame()%>%
+          t()%>%
+          as.data.frame()%>%
+          tibble::rownames_to_column()%>%
+          mutate(pressure = str_replace(rowname,'_combo.tif',""))%>%
+          rename(verylow = `2.5%`,
+                 low     = `25%`,
+                 medium  = `50%`,
+                 high    = `75%`,
+                 veryhigh = `97.5%`)%>%
+          dplyr::select(pressure, verylow, low, medium, high, veryhigh)
 
-mean score per region per layer
+```
+
+```{r}
+
+df = data.frame()
+
+for (i in 1:12){
+   
+     #get the pressure name
+     for( j in 1:25){
+       
+     pres_name = names(mci_prs_vals[i])
+     region   = names(mci_prs_vals[[i]])[j]
+     
+     #select the values
+      m = mci_prs_vals[[pres_name]][[j]]
+
+  h = filter(q,pressure == pres_name)
+  
+   n <- c(length(m[m<=h$verylow]),
+          length(m[m<=h$low & m>h$verylow]),
+          length(m[m<=h$high & m>h$low]),
+          length(m[m<=h$veryhigh & m>h$high]),
+          length(m[m>h$veryhigh]))
+   
+   d = data.frame(n)%>%
+        mutate(perc = round(n/length(m),3),
+               cat = c("verylow","low","medium","high","veryhigh"),
+               brk = c(0,2.5,25,75,97.5), #assigning breaks for plotting later
+               pressure = pres_name,
+               rgn = region,
+               mean = round(mean(m),3),
+               max = round(max(m),3))
+     
+    df = rbind(df,d) 
+     }
+ }
+
+```
+
+```{r}
+
+all = df%>%
+      dplyr::select(-n)
+      # group_by(rgn,pressure)%>%
+      # tidyr::spread(cat,perc)
+
+```
+
+```{r regions}
+library(ggplot2)
+
+#by region (Canada Atlantic)
+ca = df%>%filter(rgn == "Canada Atlantic")
+
+ca$cat <- factor(ca$cat, levels = rev(c("verylow","low","medium","high","veryhigh")))
+
+ggplot(ca,aes(x = pressure,y = perc,fill = factor(cat)))+
+         geom_bar(position = 'stack',stat = 'identity', alpha = 1) +
+  scale_fill_manual(values = c('verylow' = '#4dac26',
+                               'low' = '#b8e186', 
+                               'medium' = '#f1b6da',
+                               'high' = '#d01c8b',
+                               'veryhigh'='#67001f'),
+                     name = "Category",
+                     labels = c("verylow","low","medium","high","veryhigh",
+                    guide = guide_legend(reverse = TRUE))) +
+    coord_flip()+
+  labs(y = "Percent of region's area")
+  
+
+
+#by pressure
+
+ddf = df%>%filter(pressure == "inorganic")
+ddf$cat <- factor(ddf$cat, levels = rev(c("verylow","low","medium","high","veryhigh")))
+
+ggplot(ddf,aes(x = rgn,y = perc,fill = factor(cat)))+
+         geom_bar(position = 'stack',stat = 'identity', alpha = 1) +
+  scale_fill_manual(values = c('verylow' = '#4dac26',
+                               'low' = '#b8e186', 
+                               'medium' = '#f1b6da',
+                               'high' = '#d01c8b',
+                               'veryhigh'='#67001f'),
+                     name = "Category",
+                     labels = c("verylow","low","medium","high","veryhigh",
+                    guide = guide_legend(reverse = TRUE))) +
+    coord_flip()+
+  labs(y = "Percent of region's area")
+
++
+  facet_wrap(~pressure)
 
 
 ```
