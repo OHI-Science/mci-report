@@ -1,19 +1,25 @@
 ---
 title: "Regional Cumulative Impacts"
-author: "Jamie Afflerbach"
-date: "2/28/2017"
-output: html_document
+author: "*Compiled on `r date()` by `r Sys.info()['user']`*"
+output: 
+  html_document:
+    code_folding: show
 ---
 
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(message=F,warning=F)
+```{r setup, include=FALSE, message=F,warning=F}
+knitr::opts_chunk$set(message=F,warning=F, fig.width = 12, fig.height = 10)
 
 options(scipen = 999,
         digits = 4)
 
 library(rgdal)
-library(dplyr)
+library(tidyverse)
+library(stringr)
 library(raster)
+library(data.table)
+library(purrr)
+library(rgeos)
+library(parallel)
 
 wgs_crs <- CRS("+proj=longlat +datum=WGS84 +no_defs +ellps=WGS84 +towgs84=0,0,0")
 
@@ -22,10 +28,12 @@ dir_M             <- c('Windows' = '//mazu.nceas.ucsb.edu/ohi',
                        'Darwin'  = '/Volumes/ohi',    ### connect (cmd-K) to smb://mazu/ohi
                        'Linux'   = '/home/shares/ohi')[[ Sys.info()[['sysname']] ]]
 
-ocean = raster(file.path(dir_M,'model/GL-NCEAS-Halpern2008/tmp/ocean.tif'))%>%
-          crop(.,extent(-18040095,18040134,0,9020067))
+# ocean = raster(file.path(dir_M,'model/GL-NCEAS-Halpern2008/tmp/ocean.tif'))%>%
+#           crop(.,extent(-18040095,18040134,-2333936,9335794))
 
-writeRaster(ocean,filename = file.path(dir_M,'git-annex/mci-report/ocean_half.tif'))
+#writeRaster(ocean,filename = file.path(dir_M,'git-annex/mci-report/ocean_half.tif'),overwrite=T)
+
+ocean = raster(file.path(dir_M,'git-annex/mci-report/ocean_half.tif'))
 
 ```
 
@@ -39,6 +47,20 @@ ne  = readOGR('shapefiles','ohine_rgn')%>%
 mci_rgns = readOGR(dsn = file.path(dir_M,'git-annex/mci-report/shapefiles'),layer = 'mci_rgns')%>%
     spTransform(CRS("+proj=moll +lon_0=0 +x_0=0 +y_0=0 +ellps=WGS84 +units=m +no_defs"))
 
+if(!file.exists(file.path(dir_M,"git-annex/mci-report/three_nm.tif"))){
+
+#3nm shapefile to use when clipping coastal pressures
+threenm <- readOGR(dsn = file.path(dir_M,'git-annex/globalprep/spatial/d2014/data'),layer = 'regions_offshore3nm_mol')
+
+#remove all polygons outside of our regions
+t <- threenm[as.character(threenm@data$rgn_name) %in% c(as.character(mci_rgns@data$rgn_nam),"United States","Russia","Canada"),]
+
+#rasterize to use for masking (I think this is faster than masking with shapefile)
+three_ras <- rasterize(t,ocean,t@data$sp_id,progress='text', filename = file.path(dir_M,'git-annex/mci-report/three_nm.tif'),overwrite=T)
+}
+
+three_ras <- raster(file.path(dir_M,'git-annex/mci-report/three_nm.tif'))
+
 ```
 
 ```{r chi_data}
@@ -46,56 +68,62 @@ mci_rgns = readOGR(dsn = file.path(dir_M,'git-annex/mci-report/shapefiles'),laye
 #read in from Mazu location: marine_threats/impact_layers_2013_redo/global_impact_model_2013/normalized_by_two_time_periods/averaged_by_num_ecosystems/by_threat
 
 layers <- list.files(file.path(dir_M,'marine_threats/impact_layers_2013_redo/global_impact_model_2013/normalized_by_two_time_periods/averaged_by_num_ecosystems/by_threat'),full.names=T, pattern = '.tif$')[c(1:5,7,9:12,14,15)]
-
 ```
 
-Iterate through each shapefile + pressure layer, clip out region, summary stats
+# Regions
 
-We probably want to save maps for each region + layer. Maybe we can do it by region?
+![][rgn_map.png]
 
-```{r clip}
-
-rng <- raster(layer)%>%
-        crop(ocean)%>%
-        mask(usa_shp)
-
-library(purrr)
+```{r extract_data_for_regions}
 
 getvals <- function(layer){
   
-  vals = raster(layer)%>%
-          crop(ocean)%>%
-          raster::extract(mci_rgns,method = 'simple',progress='text')%>%
-          setNames(mci_rgns@data$rgn_nam)
-  
+    if(basename(layer) %in% c("artisanal_fishing_combo.tif","inorganic_combo.tif","plumes_fert_combo.tif","plumes_pest_combo.tif")){
+      
+       vals = raster(layer)%>%
+              crop(three_ras)%>%
+              mask(three_ras)%>%
+              raster::extract(mci_rgns,method = 'simple',progress='text')%>%
+              setNames(mci_rgns@data$rgn_nam)
+      
+    }else{
+      
+       vals = raster(layer)%>%
+              crop(ocean)%>%
+              raster::extract(mci_rgns,method = 'simple',progress='text')%>%
+              setNames(mci_rgns@data$rgn_nam)
+    }  
 return(vals)
 }
 
-#list of all values within each region for each pressure
-mci_prs_vals = map(layers,getvals)%>%
+#check to see if file exists.
+if(!file.exists(file.path(dir_M,"git-annex/mci-report/rgn_prs_values.RData"))){
+
+  #list of all values within each region for each pressure
+mci_prs_vals <- mclapply(layers,getvals,mc.cores=12)%>%
                setNames(basename(layers))%>%
                setNames(str_replace(names(.),"_combo.tif",""))
 
   save(mci_prs_vals, file=file.path(dir_M,"git-annex/mci-report/rgn_prs_values.RData"))
+}
   #vals is the list, let's try to use map to calculate mean, max
   
   load(file.path(dir_M,"git-annex/mci-report/rgn_prs_values.RData"))
 ```
 
+
+
 ```{r}
-
-# Get quantiles for each pressure layer
-
 
 quant_func <- function(layer){
   
     vec<-unlist(layer)
-    q = quantile(vec,probs = c(0.025,0.25,0.5,0.75,0.975))
+    q = quantile(vec,probs = c(0.025,0.25,0.5,0.75,0.975),na.rm=T)
     
     return(q)
 }
-library(data.table)
-library(stringr)
+
+
 #quants is a list of length 12, one for each pressure layer. Each layer has 5 quantiles
 quants = map(mci_prs_vals,quant_func)
 q = quants%>%
@@ -113,22 +141,24 @@ q = quants%>%
 
 ```
 
-```{r}
+##Quantifying the area within each threat category
+```{r, quantify_area_in_cats}
 
 df = data.frame()
 
 for (i in 1:12){
    
      #get the pressure name
-     for( j in 1:25){
+     for (j in 1:25){
        
      pres_name = names(mci_prs_vals[i])
      region   = names(mci_prs_vals[[i]])[j]
      
      #select the values
       m = mci_prs_vals[[pres_name]][[j]]
+      m = m[!is.na(m)]
 
-  h = filter(q,pressure == pres_name)
+      h = filter(q,pressure == pres_name)
   
    n <- c(length(m[m<=h$verylow]),
           length(m[m<=h$low & m>h$verylow]),
@@ -142,8 +172,9 @@ for (i in 1:12){
                brk = c(0,2.5,25,75,97.5), #assigning breaks for plotting later
                pressure = pres_name,
                rgn = region,
-               mean = round(mean(m),3),
-               max = round(max(m),3))
+               mean = round(mean(m,na.rm=T),3),
+               max = round(max(m,na.rm=T),3),
+               total = round(sum(m,na.rm=T),3))
      
     df = rbind(df,d) 
      }
@@ -151,44 +182,148 @@ for (i in 1:12){
 
 ```
 
-```{r}
+# 
 
-all = df%>%
-      dplyr::select(-n)
-      # group_by(rgn,pressure)%>%
-      # tidyr::spread(cat,perc)
+```{r regions}
+
+#by pressure
+df$cat <- factor(df$cat, levels = rev(c("verylow","low","medium","high","veryhigh")))
+ggplot(df,aes(x = rgn,y = perc,fill = factor(cat)))+
+         geom_bar(position = 'stack',stat = 'identity', alpha = 1) +
+  scale_fill_manual(values = c('verylow' = '#4dac26',
+                               'low' = '#b8e186', 
+                               'medium' = '#f1b6da',
+                               'high' = '#d01c8b',
+                               'veryhigh'='#67001f'),
+                     name = "Category",
+                     labels = c("verylow","low","medium","high","veryhigh",
+                    guide = guide_legend(reverse = TRUE))) +
+    coord_flip()+
+  labs(y = "Percent of region's area")+
+  facet_wrap(~pressure)
 
 ```
 
-```{r regions}
-library(ggplot2)
 
-#by region (Canada Atlantic)
-ca = df%>%filter(rgn == "Canada Atlantic")
+```{r avg_impact}
 
-ca$cat <- factor(ca$cat, levels = rev(c("verylow","low","medium","high","veryhigh")))
+#create small dataframe that assigns each pressure a short name for display purposes
+s <- data.frame(pressure = unique(df$pressure),
+                short    = c("art","ddf","dnd-hb","dnd-lb","inorganic","oa","pel-hb","pel-lb","fert","pest","sst","uv"))
 
-ggplot(ca,aes(x = pressure,y = perc,fill = factor(cat)))+
-         geom_bar(position = 'stack',stat = 'identity', alpha = 1) +
-  scale_fill_manual(values = c('verylow' = '#4dac26',
-                               'low' = '#b8e186', 
-                               'medium' = '#f1b6da',
-                               'high' = '#d01c8b',
-                               'veryhigh'='#67001f'),
-                     name = "Category",
-                     labels = c("verylow","low","medium","high","veryhigh",
-                    guide = guide_legend(reverse = TRUE))) +
-    coord_flip()+
-  labs(y = "Percent of region's area")
+avg <- df%>%
+        mutate(shortname = s$short[match(pressure,s$pressure)])%>%
+       dplyr::select(shortname,rgn,mean)%>%
+        unique()%>%
+        spread(shortname,mean)
+
+DT::datatable(avg)
+
+```
+
+
+***
+
+# British Columbia
+
+```{r get_bc_vals}
+
+
+get_bc_vals <- function(layer){
+      
+       vals = raster(layer)%>%
+              crop(bc)%>%
+              raster::extract(bc,method = 'simple',progress='text')%>%
+              setNames(bc@data$rgn_nam)
+return(vals)
+}
+
+
+#check to see if file exists.
+if(!file.exists(file.path(dir_M,"git-annex/mci-report/bc_prs_values.RData"))){
+
+  #list of all values within each region for each pressure
+bc_prs_vals <- mclapply(layers,get_bc_vals,mc.cores=12)%>%
+               setNames(basename(layers))%>%
+               setNames(str_replace(names(.),"_combo.tif",""))
+
+  save(bc_prs_vals, file=file.path(dir_M,"git-annex/mci-report/bc_prs_values.RData"))
+}
+  #vals is the list, let's try to use map to calculate mean, max
   
+  load(file.path(dir_M,"git-annex/mci-report/bc_prs_values.RData"))
+
+```
+
+# Get quantiles for each pressure layer
+
+```{r}
 
 
+#quants is a list of length 12, one for each pressure layer. Each layer has 5 quantiles
+bc_quants = map(bc_prs_vals,quant_func)
+q = bc_quants%>%
+      as.data.frame()%>%
+          t()%>%
+          as.data.frame()%>%
+          tibble::rownames_to_column()%>%
+          mutate(pressure = str_replace(rowname,'_combo.tif',""))%>%
+          rename(verylow = `2.5%`,
+                 low     = `25%`,
+                 medium  = `50%`,
+                 high    = `75%`,
+                 veryhigh = `97.5%`)%>%
+          dplyr::select(pressure, verylow, low, medium, high, veryhigh)
+
+```
+
+##Quantifying the area within each threat category
+```{r}
+
+df = data.frame()
+
+for (i in 1:12){
+   
+     #get the pressure name
+     for (j in 1:7){
+       
+     pres_name = names(bc_prs_vals[i])
+     region   = names(bc_prs_vals[[i]])[j]
+     
+     #select the values
+      m = bc_prs_vals[[pres_name]][[j]]
+      m = m[!is.na(m)]
+
+      h = filter(q,pressure == pres_name)
+  
+   n <- c(length(m[m<=h$verylow]),
+          length(m[m<=h$low & m>h$verylow]),
+          length(m[m<=h$high & m>h$low]),
+          length(m[m<=h$veryhigh & m>h$high]),
+          length(m[m>h$veryhigh]))
+   
+   d = data.frame(n)%>%
+        mutate(perc = round(n/length(m),3),
+               cat = c("verylow","low","medium","high","veryhigh"),
+               brk = c(0,2.5,25,75,97.5), #assigning breaks for plotting later
+               pressure = pres_name,
+               rgn = region,
+               mean = round(mean(m,na.rm=T),3),
+               max = round(max(m,na.rm=T),3),
+               total = round(sum(m,na.rm=T),3))
+     
+    df = rbind(df,d) 
+     }
+ }
+
+```
+
+#Plot
+```{r}
 #by pressure
+df$cat <- factor(df$cat, levels = rev(c("verylow","low","medium","high","veryhigh")))
 
-ddf = df%>%filter(pressure == "inorganic")
-ddf$cat <- factor(ddf$cat, levels = rev(c("verylow","low","medium","high","veryhigh")))
-
-ggplot(ddf,aes(x = rgn,y = perc,fill = factor(cat)))+
+ggplot(df,aes(x = rgn,y = perc,fill = factor(cat)))+
          geom_bar(position = 'stack',stat = 'identity', alpha = 1) +
   scale_fill_manual(values = c('verylow' = '#4dac26',
                                'low' = '#b8e186', 
@@ -199,20 +334,161 @@ ggplot(ddf,aes(x = rgn,y = perc,fill = factor(cat)))+
                      labels = c("verylow","low","medium","high","veryhigh",
                     guide = guide_legend(reverse = TRUE))) +
     coord_flip()+
-  labs(y = "Percent of region's area")
-
-+
+  labs(y = "Percent of region's area")+
   facet_wrap(~pressure)
 
 
 ```
 
-Try to answer the questions:
+```{r}
 
-1) Where is each threat the greatest?
-- Look at maximum number, NON area weighted, across threats
+#create small dataframe that assigns each pressure a short name for display purposes
+s <- data.frame(pressure = unique(df$pressure),
+                short    = c("art","ddf","dnd-hb","dnd-lb","inorganic","oa","pel-hb","pel-lb","fert","pest","sst","uv"))
 
-2) What threats are greatest in each region?
+avg <- df%>%
+        mutate(shortname = s$short[match(pressure,s$pressure)])%>%
+       dplyr::select(shortname,rgn,mean)%>%
+        unique()%>%
+        spread(shortname,mean)
 
+DT::datatable(avg)
+
+```
+
+***
+
+# Northeast
+
+
+```{r get_ne_vals}
+
+get_ne_vals <- function(layer){
+      
+       vals = raster(layer)%>%
+              crop(ne)%>%
+              raster::extract(ne,method = 'simple',progress='text')%>%
+              setNames(ne@data$rgn_nam)
+return(vals)
+}
+
+
+#check to see if file exists.
+if(!file.exists(file.path(dir_M,"git-annex/mci-report/ne_prs_values.RData"))){
+
+  #list of all values within each region for each pressure
+ne_prs_vals <- mclapply(layers,get_ne_vals,mc.cores=12)%>%
+               setNames(basename(layers))%>%
+               setNames(str_replace(names(.),"_combo.tif",""))
+
+  save(ne_prs_vals, file=file.path(dir_M,"git-annex/mci-report/ne_prs_values.RData"))
+}
+  #vals is the list, let's try to use map to calculate mean, max
+  
+  load(file.path(dir_M,"git-annex/mci-report/ne_prs_values.RData"))
+
+```
+
+# Get quantiles for each pressure layer
+
+```{r}
+
+
+#quants is a list of length 12, one for each pressure layer. Each layer has 5 quantiles
+ne_quants = map(ne_prs_vals,quant_func)
+q = ne_quants%>%
+      as.data.frame()%>%
+          t()%>%
+          as.data.frame()%>%
+          tibble::rownames_to_column()%>%
+          mutate(pressure = str_replace(rowname,'_combo.tif',""))%>%
+          rename(verylow = `2.5%`,
+                 low     = `25%`,
+                 medium  = `50%`,
+                 high    = `75%`,
+                 veryhigh = `97.5%`)%>%
+          dplyr::select(pressure, verylow, low, medium, high, veryhigh)
+
+```
+
+##Quantifying the area within each threat category
+```{r}
+
+df = data.frame()
+
+for (i in 1:12){
+   
+     #get the pressure name
+     for (j in 1:9){
+       
+     pres_name = names(ne_prs_vals[i])
+     region   = names(ne_prs_vals[[i]])[j]
+     
+     #select the values
+      m = ne_prs_vals[[pres_name]][[j]]
+      m = m[!is.na(m)]
+
+      h = filter(q,pressure == pres_name)
+  
+   n <- c(length(m[m<=h$verylow]),
+          length(m[m<=h$low & m>h$verylow]),
+          length(m[m<=h$high & m>h$low]),
+          length(m[m<=h$veryhigh & m>h$high]),
+          length(m[m>h$veryhigh]))
+   
+   d = data.frame(n)%>%
+        mutate(perc = round(n/length(m),3),
+               cat = c("verylow","low","medium","high","veryhigh"),
+               brk = c(0,2.5,25,75,97.5), #assigning breaks for plotting later
+               pressure = pres_name,
+               rgn = region,
+               mean = round(mean(m,na.rm=T),3),
+               max = round(max(m,na.rm=T),3),
+               total = round(sum(m,na.rm=T),3))
+     
+    df = rbind(df,d) 
+     }
+ }
+
+```
+
+#Plot
+```{r}
+#by pressure
+df$cat <- factor(df$cat, levels = rev(c("verylow","low","medium","high","veryhigh")))
+
+ggplot(df,aes(x = rgn,y = perc,fill = factor(cat)))+
+         geom_bar(position = 'stack',stat = 'identity', alpha = 1) +
+  scale_fill_manual(values = c('verylow' = '#4dac26',
+                               'low' = '#b8e186', 
+                               'medium' = '#f1b6da',
+                               'high' = '#d01c8b',
+                               'veryhigh'='#67001f'),
+                     name = "Category",
+                     labels = c("verylow","low","medium","high","veryhigh",
+                    guide = guide_legend(reverse = TRUE))) +
+    coord_flip()+
+  labs(y = "Percent of region's area")+
+  facet_wrap(~pressure)
+
+
+```
+
+
+```{r}
+
+#create small dataframe that assigns each pressure a short name for display purposes
+s <- data.frame(pressure = unique(df$pressure),
+                short    = c("art","ddf","dnd-hb","dnd-lb","inorganic","oa","pel-hb","pel-lb","fert","pest","sst","uv"))
+
+avg <- df%>%
+        mutate(shortname = s$short[match(pressure,s$pressure)])%>%
+       dplyr::select(shortname,rgn,mean)%>%
+        unique()%>%
+        spread(shortname,mean)
+
+DT::datatable(avg)
+
+```
 
 
