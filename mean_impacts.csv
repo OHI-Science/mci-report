@@ -1,0 +1,26 @@
+"","rgn","artisanal_fishing","demersal_destructive_fishing","demersal_nondest_high_bycatch","demersal_nondest_low_bycatch","inorganic","ocean_acidification","pelagic_high_bycatch","pelagic_low_bycatch","plumes_fert","plumes_pest","sst","uv"
+"1","American Samoa",NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+"2","Canada Arctic East",0,0.021,0.001,0.001,0.001,0.395,0,0,0.001,0,0.779,0.395
+"3","Canada Arctic West",0,0,0,0,0,0.609,0,0,0,0,0.195,0.083
+"4","Canada Atlantic",0.002,0.159,0.091,0.037,0.005,0.734,0,0.024,0.002,0,1.625,0.659
+"5","Canada Pacific",0.002,0.038,0.008,0.02,0.003,0.863,0,0.002,0.001,0,0.467,0.652
+"6","Howland Island and Baker Island",0,0.001,0.004,0.013,0,1.034,0,0.016,0,0,1.055,0.763
+"7","Jarvis Island",0,0,0,0.001,0,0.965,0,0.002,0,0,0.071,0.782
+"8","Johnston Atoll",0,0.001,0.001,0.003,0,1.176,0,0.005,0,0,1.331,0.628
+"9","Northern Mariana Islands and Guam",0,0.007,0.023,0.042,0,1.175,0,0.059,0,0,1.793,0.691
+"10","Palmyra Atoll",0,0.001,0.001,0.002,0,1.071,0,0.002,0,0,0.496,0.719
+"11","Puerto Rico and Virgin Islands of the United States",0.004,0.019,0.012,0.011,0.01,1.203,0.01,0.002,0,0,2.05,0.599
+"12","Russia Bering Sea",0,0.106,0.026,0.065,0.001,0.633,0,0,0,0,1.593,0.695
+"13","United States Alaska Arctic",0,0,0,0,0,0.557,0,0,0.002,0,0.545,0.205
+"14","United States Alaska Pacific",0,0.148,0.022,0.02,0.001,0.644,0,0.001,0.001,0,1.125,0.717
+"15","United States Central California",0.001,0.079,0.057,0.023,0.005,0.915,0,0.001,0.004,0.002,0.622,0.715
+"16","United States Gulf of Mexico",0.001,0.068,0.026,0.059,0.017,0.808,0.005,0,0.021,0.004,1.249,0.458
+"17","United States Hawaii",0,0.002,0.003,0.006,0.001,1.175,0.002,0.003,0.001,0,1.332,0.735
+"18","United States Mid Atlantic",0.001,0.168,0.061,0.055,0.019,0.786,0,0.007,0.019,0.005,0.709,0.555
+"19","United States New England",0.003,0.174,0.049,0.03,0.016,0.772,0,0.008,0.006,0.001,1.405,0.638
+"20","United States Northern California",0,0.053,0.035,0.03,0.003,0.927,0,0.001,0.003,0.001,0.731,0.781
+"21","United States Oregon",0,0.027,0.005,0.049,0.005,0.97,0,0.001,0.004,0.001,0.64,0.789
+"22","United States South Atlantic",0.001,0.063,0.019,0.022,0.017,1.007,0.003,0.002,0.014,0.002,1.14,0.491
+"23","United States Southern California",0.001,0.041,0.024,0.038,0.012,0.963,0,0.002,0.003,0,0.435,0.595
+"24","United States Washington",0.004,0.064,0.009,0.092,0.023,0.836,0,0.002,0.013,0.004,0.91,0.669
+"25","Wake Island",0,0.004,0.013,0.017,0,1.261,0,0.025,0,0,1.791,0.568

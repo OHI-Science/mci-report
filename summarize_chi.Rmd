@@ -3,7 +3,7 @@ title: "Regional Cumulative Impacts"
 author: "*Compiled on `r date()` by `r Sys.info()['user']`*"
 output: 
   html_document:
-    code_folding: show
+    code_folding: hide
 ---
 
 ```{r setup, include=FALSE, message=F,warning=F}
@@ -20,6 +20,7 @@ library(data.table)
 library(purrr)
 library(rgeos)
 library(parallel)
+library(tmap)
 
 wgs_crs <- CRS("+proj=longlat +datum=WGS84 +no_defs +ellps=WGS84 +towgs84=0,0,0")
 
@@ -39,12 +40,12 @@ ocean = raster(file.path(dir_M,'git-annex/mci-report/ocean_half.tif'))
 
 ```{r rgn_shapefiles}
 
-bc  = readOGR('shapefiles','ohibc_rgn')%>%
+bc  = readOGR('shapefiles','ohibc_rgn', verbose = F)%>%
       spTransform(CRS("+proj=moll +lon_0=0 +x_0=0 +y_0=0 +ellps=WGS84 +units=m +no_defs"))
-ne  = readOGR('shapefiles','ohine_rgn')%>%
+ne  = readOGR('shapefiles','ohine_rgn', verbose = F)%>%
       spTransform(CRS("+proj=moll +lon_0=0 +x_0=0 +y_0=0 +ellps=WGS84 +units=m +no_defs"))
 
-mci_rgns = readOGR(dsn = file.path(dir_M,'git-annex/mci-report/shapefiles'),layer = 'mci_rgns')%>%
+mci_rgns = readOGR(dsn = file.path(dir_M,'git-annex/mci-report/shapefiles'),layer = 'mci_rgns', verbose=F)%>%
     spTransform(CRS("+proj=moll +lon_0=0 +x_0=0 +y_0=0 +ellps=WGS84 +units=m +no_defs"))
 
 if(!file.exists(file.path(dir_M,"git-annex/mci-report/three_nm.tif"))){
@@ -72,7 +73,7 @@ layers <- list.files(file.path(dir_M,'marine_threats/impact_layers_2013_redo/glo
 
 # Regions
 
-![][rgn_map.png]
+![Reporting regions](./rgn_map.png)
 
 ```{r extract_data_for_regions}
 
@@ -141,7 +142,7 @@ q = quants%>%
 
 ```
 
-##Quantifying the area within each threat category
+
 ```{r, quantify_area_in_cats}
 
 df = data.frame()
@@ -182,7 +183,7 @@ for (i in 1:12){
 
 ```
 
-# 
+### Proportional area and impact of stressors across all regions
 
 ```{r regions}
 
@@ -226,6 +227,20 @@ DT::datatable(avg)
 
 # British Columbia
 
+
+```{r plot_bc_rgns}
+library(tmap)
+bc_map <- readOGR('shapefiles','ohibc_rgn', verbose = F)
+
+tm_shape(bc_map)+
+  tm_polygons(col = 'rgn_name',
+              title = 'Regions',
+              palette = 'Set2')+
+tm_legend(text.size=1.5,
+    title.size=1.5)
+
+```
+
 ```{r get_bc_vals}
 
 
@@ -255,7 +270,6 @@ bc_prs_vals <- mclapply(layers,get_bc_vals,mc.cores=12)%>%
 
 ```
 
-# Get quantiles for each pressure layer
 
 ```{r}
 
@@ -277,7 +291,7 @@ q = bc_quants%>%
 
 ```
 
-##Quantifying the area within each threat category
+### Proportional area and impact of stressors in British Columbia
 ```{r}
 
 df = data.frame()
@@ -318,7 +332,7 @@ for (i in 1:12){
 
 ```
 
-#Plot
+
 ```{r}
 #by pressure
 df$cat <- factor(df$cat, levels = rev(c("verylow","low","medium","high","veryhigh")))
@@ -360,6 +374,21 @@ DT::datatable(avg)
 
 # Northeast
 
+```{r}
+
+ne_map <- readOGR('shapefiles','ohine_rgn', verbose = F)
+
+tm_shape(ne_map)+
+  tm_polygons(col = 'rgn_name',
+              title = 'Regions',
+              palette = 'Set2')+
+tm_legend(text.size=1.5,
+    title.size=1.5,
+    position = c("left","top"))
+
+
+```
+
 
 ```{r get_ne_vals}
 
@@ -389,7 +418,6 @@ ne_prs_vals <- mclapply(layers,get_ne_vals,mc.cores=12)%>%
 
 ```
 
-# Get quantiles for each pressure layer
 
 ```{r}
 
@@ -411,7 +439,7 @@ q = ne_quants%>%
 
 ```
 
-##Quantifying the area within each threat category
+### Proportional area and impact of stressors in the Northeast USA
 ```{r}
 
 df = data.frame()
@@ -452,7 +480,7 @@ for (i in 1:12){
 
 ```
 
-#Plot
+
 ```{r}
 #by pressure
 df$cat <- factor(df$cat, levels = rev(c("verylow","low","medium","high","veryhigh")))
@@ -491,4 +519,140 @@ DT::datatable(avg)
 
 ```
 
+***
+
+# Baffin Bay and Davis Strait
+
+```{r}
+
+bbds_map <- readOGR(file.path(dir_M,'git-annex/mci-report/shapefiles'),'baffin', verbose = F)
+
+bbds <- spTransform(bbds_map,CRS("+proj=moll +lon_0=0 +x_0=0 +y_0=0 +ellps=WGS84 +units=m +no_defs"))
+
+plot(bbds_map, col = 'lightblue', main = "Baffin Bay & Davis Strait")
+
+```
+
+
+```{r get_bbds_vals}
+
+get_bbds_vals <- function(layer){
+      
+       vals = raster(layer)%>%
+              crop(bbds)%>%
+              raster::extract(bbds,method = 'simple',progress='text')%>%
+              setNames(bbds@data$rgn_nam)
+return(vals)
+}
+
+
+#check to see if file exists.
+if(!file.exists(file.path(dir_M,"git-annex/mci-report/bbds_prs_values.RData"))){
+
+  #list of all values within each region for each pressure
+bbds_prs_vals <- mclapply(layers,get_bbds_vals,mc.cores=12)%>%
+               setNames(basename(layers))%>%
+               setNames(str_replace(names(.),"_combo.tif",""))
+
+  save(bbds_prs_vals, file=file.path(dir_M,"git-annex/mci-report/bbds_prs_values.RData"))
+}
+  #vals is the list, let's try to use map to calculate mean, max
+  
+  load(file.path(dir_M,"git-annex/mci-report/bbds_prs_values.RData"))
+
+```
+
+
+```{r}
+
+#quants is a list of length 12, one for each pressure layer. Each layer has 5 quantiles
+bbds_quants = map(bbds_prs_vals,quant_func)
+q = bbds_quants%>%
+      as.data.frame()%>%
+          t()%>%
+          as.data.frame()%>%
+          tibble::rownames_to_column()%>%
+          mutate(pressure = str_replace(rowname,'_combo.tif',""))%>%
+          rename(verylow = `2.5%`,
+                 low     = `25%`,
+                 medium  = `50%`,
+                 high    = `75%`,
+                 veryhigh = `97.5%`)%>%
+          dplyr::select(pressure, verylow, low, medium, high, veryhigh)
+
+```
+
+### Proportional area and impact of stressors in the Baffin Bay & Davis Strait
+```{r}
+
+df = data.frame()
+
+for (i in 1:12){
+       
+     pres_name = names(bbds_prs_vals[i])
+     
+     #select the values
+      m = bbds_prs_vals[[pres_name]][[1]]
+      m = m[!is.na(m)]
+
+      h = filter(q,pressure == pres_name)
+  
+   n <- c(length(m[m<=h$verylow]),
+          length(m[m<=h$low & m>h$verylow]),
+          length(m[m<=h$high & m>h$low]),
+          length(m[m<=h$veryhigh & m>h$high]),
+          length(m[m>h$veryhigh]))
+   
+   d = data.frame(n)%>%
+        mutate(perc = round(n/length(m),3),
+               cat = c("verylow","low","medium","high","veryhigh"),
+               brk = c(0,2.5,25,75,97.5), #assigning breaks for plotting later
+               pressure = pres_name,
+               rgn = "Greenland",
+               mean = round(mean(m,na.rm=T),3),
+               max = round(max(m,na.rm=T),3),
+               total = round(sum(m,na.rm=T),3))
+     
+    df = rbind(df,d) 
+ }
+
+```
+
+
+```{r}
+#by pressure
+df$cat <- factor(df$cat, levels = rev(c("verylow","low","medium","high","veryhigh")))
+
+ggplot(df,aes(x = pressure,y = perc,fill = factor(cat)))+
+         geom_bar(position = 'stack',stat = 'identity', alpha = 1) +
+  scale_fill_manual(values = c('verylow' = '#4dac26',
+                               'low' = '#b8e186', 
+                               'medium' = '#f1b6da',
+                               'high' = '#d01c8b',
+                               'veryhigh'='#67001f'),
+                     name = "Category",
+                     labels = c("verylow","low","medium","high","veryhigh",
+                    guide = guide_legend(reverse = TRUE))) +
+    coord_flip()+
+  labs(y = "Percent of region's area")
+
+
+```
+
+
+```{r}
+
+#create small dataframe that assigns each pressure a short name for display purposes
+s <- data.frame(pressure = unique(df$pressure),
+                short    = c("art","ddf","dnd-hb","dnd-lb","inorganic","oa","pel-hb","pel-lb","fert","pest","sst","uv"))
+
+avg <- df%>%
+        mutate(shortname = s$short[match(pressure,s$pressure)])%>%
+       dplyr::select(shortname,rgn,mean)%>%
+        unique()%>%
+        spread(shortname,mean)
+
+DT::datatable(avg)
+
+```
 
