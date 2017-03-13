@@ -1,0 +1,121 @@
+---
+title: 'OHI scores: Canada and US'
+author: "*Compiled on `r date()` by `r Sys.info()['user']`*"
+output: 
+  html_document:
+    code_folding: hide
+    toc: true
+    toc_depth: 3
+    number_sections: true
+    theme: cerulean
+    highlight: haddock
+    includes: 
+      in_header: '~/github/ohiprep/src/templates/ohi_hdr.html'
+  pdf_document:
+    toc: true
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, message = FALSE, warning = FALSE)
+
+library(tidyverse)
+library(stringr)
+
+
+```
+
+``` {r load_scores}
+
+score_files <- sprintf('~/github/ohi-global/eez%s/scores.csv', 2012:2016) %>%
+  setNames(basename(dirname(.)))
+
+score_rgns <- read_csv('~/github/ohi-global/eez2013/layers/rgn_labels.csv') %>%
+  select(rgn_id, rgn_name = label) %>%
+  filter(rgn_id %in% c(163, 218))
+
+scores <- lapply(score_files, read_csv) %>%
+  setNames(names(score_files)) %>%
+  bind_rows(.id = 'scenario') %>%
+  rename(rgn_id = region_id) %>%
+  filter(rgn_id %in% score_rgns$rgn_id) %>% ### 163 = USA, 218 = Canada
+  mutate(year = str_replace(scenario, 'eez', '') %>% as.integer()) %>%
+  left_join(score_rgns, by = 'rgn_id')
+
+write_csv(scores, 'scores_raw.csv')
+
+```
+
+# Scores by goal
+
+Plot scores across all years for each region, by goal and by dimension.  
+
+* Two regions across five years on each small multiple
+* Plot 1: Current status, likely future state, and score
+* Plot 2: Pressures and resilience per goal
+
+``` {r plot score status future by goal}
+
+scores <- read_csv('scores_raw.csv') %>%
+  spread(dimension, score) %>%
+  mutate(rgn_name = as.factor(rgn_name),
+         year = year - 2000) %>%
+  filter(goal != 'Index')
+
+status_facets <- ggplot(scores, aes(x = year, y = status, color = rgn_name, group = rgn_name)) +
+  theme_bw() +
+  geom_line(linetype = 2, alpha = .5) +
+  geom_line(aes(y = future), linetype = 3, alpha = .5) +
+  geom_line(aes(y = score), linetype = 1) +
+  scale_y_continuous(limits = c(0, 100)) +
+  facet_wrap(~ goal) + 
+  labs(title = 'solid = score, dash = status, dot = future')
+
+print(status_facets)
+```
+
+
+``` {r plot pressure resilience by goal}
+
+scores1 <- scores %>%
+  filter(!is.na(pressures))
+
+prs_res_plot <- ggplot(scores1, aes(x = year, y = pressures, color = rgn_name, group = rgn_name)) +
+  theme_bw() +
+  geom_line(linetype = 2) +
+  geom_line(aes(y = resilience), linetype = 3) +
+  scale_y_continuous(limits = c(0, 100)) +
+  facet_wrap(~ goal) + 
+  labs(title = 'dash = pressure, dot = resilience')
+
+print(prs_res_plot)
+```
+
+# Scores by region
+
+Plot scores across all years for each region, by goal  
+
+* ten goals (subgoals excluded for clarity) across five years
+* Current status
+
+``` {r plot score status future by country}
+
+scores <- read_csv('scores_raw.csv') %>%
+  spread(dimension, score) %>%
+  mutate(rgn_name = as.factor(rgn_name),
+         year = year - 2000) %>%
+  filter(goal != 'Index')
+
+status_by_rgn <- ggplot(scores %>%
+                          filter(!goal %in% c('ECO', 'LIV', 'FIS', 'MAR', 'SPP', 'HAB', 'LSP', 'ICO')), 
+                        aes(x = year, y = status, color = goal, group = goal)) +
+  theme_bw() +
+  geom_line(size = 1.5, alpha = .8) +
+  # geom_line(aes(y = future), linetype = 3, alpha = .5) +
+  # geom_line(aes(y = score), linetype = 1) +
+  scale_color_brewer(palette = 'Spectral') + #    Paired    Set2  Set3)
+  scale_y_continuous(limits = c(0, 100)) +
+  facet_wrap(~ rgn_name)
+
+print(status_by_rgn)
+
+```

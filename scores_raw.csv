@@ -1,0 +1,1101 @@
+scenario,goal,dimension,rgn_id,score,year,rgn_name
+eez2012,AO,future,163,100.0,2012,United States
+eez2012,AO,future,218,100.0,2012,Canada
+eez2012,AO,pressures,163,20.45,2012,United States
+eez2012,AO,pressures,218,14.67,2012,Canada
+eez2012,AO,resilience,163,77.19,2012,United States
+eez2012,AO,resilience,218,79.6,2012,Canada
+eez2012,AO,score,163,99.96,2012,United States
+eez2012,AO,score,218,96.93,2012,Canada
+eez2012,AO,status,163,99.91,2012,United States
+eez2012,AO,status,218,93.85,2012,Canada
+eez2012,AO,trend,163,0.0,2012,United States
+eez2012,AO,trend,218,0.0,2012,Canada
+eez2012,BD,future,163,85.03,2012,United States
+eez2012,BD,future,218,100.0,2012,Canada
+eez2012,BD,pressures,163,NA,2012,United States
+eez2012,BD,pressures,218,NA,2012,Canada
+eez2012,BD,resilience,163,NA,2012,United States
+eez2012,BD,resilience,218,NA,2012,Canada
+eez2012,BD,score,163,84.89,2012,United States
+eez2012,BD,score,218,93.91,2012,Canada
+eez2012,BD,status,163,84.76,2012,United States
+eez2012,BD,status,218,87.82,2012,Canada
+eez2012,BD,trend,163,-0.18,2012,United States
+eez2012,BD,trend,218,-0.07,2012,Canada
+eez2012,CP,future,163,96.29,2012,United States
+eez2012,CP,future,218,100.0,2012,Canada
+eez2012,CP,pressures,163,24.7,2012,United States
+eez2012,CP,pressures,218,21.03,2012,Canada
+eez2012,CP,resilience,163,73.96,2012,United States
+eez2012,CP,resilience,218,85.85,2012,Canada
+eez2012,CP,score,163,91.28,2012,United States
+eez2012,CP,score,218,95.67,2012,Canada
+eez2012,CP,status,163,86.26,2012,United States
+eez2012,CP,status,218,91.35,2012,Canada
+eez2012,CP,trend,163,-0.07,2012,United States
+eez2012,CP,trend,218,-0.02,2012,Canada
+eez2012,CS,future,163,58.58,2012,United States
+eez2012,CS,future,218,59.6,2012,Canada
+eez2012,CS,pressures,163,26.48,2012,United States
+eez2012,CS,pressures,218,12.01,2012,Canada
+eez2012,CS,resilience,163,54.03,2012,United States
+eez2012,CS,resilience,218,69.04,2012,Canada
+eez2012,CS,score,163,62.15,2012,United States
+eez2012,CS,score,218,54.88,2012,Canada
+eez2012,CS,status,163,65.72,2012,United States
+eez2012,CS,status,218,50.16,2012,Canada
+eez2012,CS,trend,163,-0.3,2012,United States
+eez2012,CS,trend,218,0.0,2012,Canada
+eez2012,CW,future,163,88.7,2012,United States
+eez2012,CW,future,218,100.0,2012,Canada
+eez2012,CW,pressures,163,52.26,2012,United States
+eez2012,CW,pressures,218,23.22,2012,Canada
+eez2012,CW,resilience,163,39.85,2012,United States
+eez2012,CW,resilience,218,67.93,2012,Canada
+eez2012,CW,score,163,83.0,2012,United States
+eez2012,CW,score,218,95.73,2012,Canada
+eez2012,CW,status,163,77.3,2012,United States
+eez2012,CW,status,218,91.45,2012,Canada
+eez2012,CW,trend,163,0.28,2012,United States
+eez2012,CW,trend,218,-0.01,2012,Canada
+eez2012,ECO,future,163,100.0,2012,United States
+eez2012,ECO,future,218,100.0,2012,Canada
+eez2012,ECO,pressures,163,22.47,2012,United States
+eez2012,ECO,pressures,218,13.36,2012,Canada
+eez2012,ECO,resilience,163,78.97,2012,United States
+eez2012,ECO,resilience,218,82.63,2012,Canada
+eez2012,ECO,score,163,99.83,2012,United States
+eez2012,ECO,score,218,100.0,2012,Canada
+eez2012,ECO,status,163,99.66,2012,United States
+eez2012,ECO,status,218,100.0,2012,Canada
+eez2012,ECO,trend,163,0.0,2012,United States
+eez2012,ECO,trend,218,0.0,2012,Canada
+eez2012,FIS,future,163,62.91,2012,United States
+eez2012,FIS,future,218,32.9,2012,Canada
+eez2012,FIS,pressures,163,26.06,2012,United States
+eez2012,FIS,pressures,218,19.93,2012,Canada
+eez2012,FIS,resilience,163,72.17,2012,United States
+eez2012,FIS,resilience,218,77.82,2012,Canada
+eez2012,FIS,score,163,59.36,2012,United States
+eez2012,FIS,score,218,31.25,2012,Canada
+eez2012,FIS,status,163,55.8,2012,United States
+eez2012,FIS,status,218,29.6,2012,Canada
+eez2012,FIS,trend,163,-0.04,2012,United States
+eez2012,FIS,trend,218,-0.12,2012,Canada
+eez2012,FP,future,163,61.29,2012,United States
+eez2012,FP,future,218,39.47,2012,Canada
+eez2012,FP,pressures,163,NA,2012,United States
+eez2012,FP,pressures,218,NA,2012,Canada
+eez2012,FP,resilience,163,NA,2012,United States
+eez2012,FP,resilience,218,NA,2012,Canada
+eez2012,FP,score,163,57.83,2012,United States
+eez2012,FP,score,218,37.01,2012,Canada
+eez2012,FP,status,163,54.37,2012,United States
+eez2012,FP,status,218,34.55,2012,Canada
+eez2012,FP,trend,163,-0.04,2012,United States
+eez2012,FP,trend,218,-0.1,2012,Canada
+eez2012,HAB,future,163,75.43,2012,United States
+eez2012,HAB,future,218,100.0,2012,Canada
+eez2012,HAB,pressures,163,25.89,2012,United States
+eez2012,HAB,pressures,218,15.75,2012,Canada
+eez2012,HAB,resilience,163,73.02,2012,United States
+eez2012,HAB,resilience,218,83.99,2012,Canada
+eez2012,HAB,score,163,75.61,2012,United States
+eez2012,HAB,score,218,92.36,2012,Canada
+eez2012,HAB,status,163,75.78,2012,United States
+eez2012,HAB,status,218,84.73,2012,Canada
+eez2012,HAB,trend,163,-0.24,2012,United States
+eez2012,HAB,trend,218,-0.03,2012,Canada
+eez2012,ICO,future,163,74.75,2012,United States
+eez2012,ICO,future,218,76.31,2012,Canada
+eez2012,ICO,pressures,163,30.6,2012,United States
+eez2012,ICO,pressures,218,15.73,2012,Canada
+eez2012,ICO,resilience,163,71.94,2012,United States
+eez2012,ICO,resilience,218,79.75,2012,Canada
+eez2012,ICO,score,163,69.57,2012,United States
+eez2012,ICO,score,218,68.79,2012,Canada
+eez2012,ICO,status,163,64.39,2012,United States
+eez2012,ICO,status,218,61.27,2012,Canada
+eez2012,ICO,trend,163,0.04,2012,United States
+eez2012,ICO,trend,218,0.05,2012,Canada
+eez2012,Index,future,163,77.6,2012,United States
+eez2012,Index,future,218,81.86,2012,Canada
+eez2012,Index,score,163,75.86,2012,United States
+eez2012,Index,score,218,76.5,2012,Canada
+eez2012,LE,future,163,75.73,2012,United States
+eez2012,LE,future,218,96.86,2012,Canada
+eez2012,LE,pressures,163,NA,2012,United States
+eez2012,LE,pressures,218,NA,2012,Canada
+eez2012,LE,resilience,163,NA,2012,United States
+eez2012,LE,resilience,218,NA,2012,Canada
+eez2012,LE,score,163,79.2,2012,United States
+eez2012,LE,score,218,92.84,2012,Canada
+eez2012,LE,status,163,82.67,2012,United States
+eez2012,LE,status,218,88.81,2012,Canada
+eez2012,LE,trend,163,-0.25,2012,United States
+eez2012,LE,trend,218,0.01,2012,Canada
+eez2012,LIV,future,163,51.46,2012,United States
+eez2012,LIV,future,218,93.73,2012,Canada
+eez2012,LIV,pressures,163,23.35,2012,United States
+eez2012,LIV,pressures,218,13.32,2012,Canada
+eez2012,LIV,resilience,163,59.23,2012,United States
+eez2012,LIV,resilience,218,70.25,2012,Canada
+eez2012,LIV,score,163,58.57,2012,United States
+eez2012,LIV,score,218,85.67,2012,Canada
+eez2012,LIV,status,163,65.69,2012,United States
+eez2012,LIV,status,218,77.61,2012,Canada
+eez2012,LIV,trend,163,-0.5,2012,United States
+eez2012,LIV,trend,218,0.03,2012,Canada
+eez2012,LSP,future,163,76.31,2012,United States
+eez2012,LSP,future,218,31.36,2012,Canada
+eez2012,LSP,pressures,163,35.22,2012,United States
+eez2012,LSP,pressures,218,16.2,2012,Canada
+eez2012,LSP,resilience,163,48.94,2012,United States
+eez2012,LSP,resilience,218,77.02,2012,Canada
+eez2012,LSP,score,163,74.49,2012,United States
+eez2012,LSP,score,218,26.97,2012,Canada
+eez2012,LSP,status,163,72.67,2012,United States
+eez2012,LSP,status,218,22.57,2012,Canada
+eez2012,LSP,trend,163,0.01,2012,United States
+eez2012,LSP,trend,218,0.28,2012,Canada
+eez2012,MAR,future,163,11.52,2012,United States
+eez2012,MAR,future,218,92.67,2012,Canada
+eez2012,MAR,pressures,163,20.05,2012,United States
+eez2012,MAR,pressures,218,10.21,2012,Canada
+eez2012,MAR,resilience,163,53.95,2012,United States
+eez2012,MAR,resilience,218,73.91,2012,Canada
+eez2012,MAR,score,163,11.03,2012,United States
+eez2012,MAR,score,218,83.63,2012,Canada
+eez2012,MAR,status,163,10.54,2012,United States
+eez2012,MAR,status,218,74.6,2012,Canada
+eez2012,MAR,trend,163,-0.03,2012,United States
+eez2012,MAR,trend,218,0.05,2012,Canada
+eez2012,NP,future,163,87.55,2012,United States
+eez2012,NP,future,218,100.0,2012,Canada
+eez2012,NP,pressures,163,17.72,2012,United States
+eez2012,NP,pressures,218,11.33,2012,Canada
+eez2012,NP,resilience,163,72.21,2012,United States
+eez2012,NP,resilience,218,80.27,2012,Canada
+eez2012,NP,score,163,80.83,2012,United States
+eez2012,NP,score,218,91.17,2012,Canada
+eez2012,NP,status,163,74.1,2012,United States
+eez2012,NP,status,218,82.35,2012,Canada
+eez2012,NP,trend,163,0.0,2012,United States
+eez2012,NP,trend,218,0.51,2012,Canada
+eez2012,SP,future,163,75.53,2012,United States
+eez2012,SP,future,218,53.84,2012,Canada
+eez2012,SP,pressures,163,NA,2012,United States
+eez2012,SP,pressures,218,NA,2012,Canada
+eez2012,SP,resilience,163,NA,2012,United States
+eez2012,SP,resilience,218,NA,2012,Canada
+eez2012,SP,score,163,72.03,2012,United States
+eez2012,SP,score,218,47.88,2012,Canada
+eez2012,SP,status,163,68.53,2012,United States
+eez2012,SP,status,218,41.92,2012,Canada
+eez2012,SP,trend,163,0.02,2012,United States
+eez2012,SP,trend,218,0.17,2012,Canada
+eez2012,SPP,future,163,94.62,2012,United States
+eez2012,SPP,future,218,100.0,2012,Canada
+eez2012,SPP,pressures,163,29.27,2012,United States
+eez2012,SPP,pressures,218,19.43,2012,Canada
+eez2012,SPP,resilience,163,55.96,2012,United States
+eez2012,SPP,resilience,218,73.56,2012,Canada
+eez2012,SPP,score,163,94.18,2012,United States
+eez2012,SPP,score,218,95.46,2012,Canada
+eez2012,SPP,status,163,93.73,2012,United States
+eez2012,SPP,status,218,90.92,2012,Canada
+eez2012,SPP,trend,163,-0.12,2012,United States
+eez2012,SPP,trend,218,-0.11,2012,Canada
+eez2012,TR,future,163,47.28,2012,United States
+eez2012,TR,future,218,68.83,2012,Canada
+eez2012,TR,pressures,163,36.32,2012,United States
+eez2012,TR,pressures,218,18.5,2012,Canada
+eez2012,TR,resilience,163,39.85,2012,United States
+eez2012,TR,resilience,218,67.93,2012,Canada
+eez2012,TR,score,163,47.47,2012,United States
+eez2012,TR,score,218,58.98,2012,Canada
+eez2012,TR,status,163,47.66,2012,United States
+eez2012,TR,status,218,49.13,2012,Canada
+eez2012,TR,trend,163,-0.03,2012,United States
+eez2012,TR,trend,218,0.36,2012,Canada
+eez2013,AO,future,163,100.0,2013,United States
+eez2013,AO,future,218,100.0,2013,Canada
+eez2013,AO,pressures,163,20.33,2013,United States
+eez2013,AO,pressures,218,14.66,2013,Canada
+eez2013,AO,resilience,163,77.32,2013,United States
+eez2013,AO,resilience,218,79.61,2013,Canada
+eez2013,AO,score,163,100.0,2013,United States
+eez2013,AO,score,218,97.01,2013,Canada
+eez2013,AO,status,163,100.0,2013,United States
+eez2013,AO,status,218,94.02,2013,Canada
+eez2013,AO,trend,163,0.0,2013,United States
+eez2013,AO,trend,218,0.01,2013,Canada
+eez2013,BD,future,163,86.37,2013,United States
+eez2013,BD,future,218,100.0,2013,Canada
+eez2013,BD,pressures,163,NA,2013,United States
+eez2013,BD,pressures,218,NA,2013,Canada
+eez2013,BD,resilience,163,NA,2013,United States
+eez2013,BD,resilience,218,NA,2013,Canada
+eez2013,BD,score,163,85.58,2013,United States
+eez2013,BD,score,218,93.9,2013,Canada
+eez2013,BD,status,163,84.79,2013,United States
+eez2013,BD,status,218,87.8,2013,Canada
+eez2013,BD,trend,163,-0.16,2013,United States
+eez2013,BD,trend,218,-0.07,2013,Canada
+eez2013,CP,future,163,98.91,2013,United States
+eez2013,CP,future,218,100.0,2013,Canada
+eez2013,CP,pressures,163,23.84,2013,United States
+eez2013,CP,pressures,218,21.42,2013,Canada
+eez2013,CP,resilience,163,74.13,2013,United States
+eez2013,CP,resilience,218,85.86,2013,Canada
+eez2013,CP,score,163,93.59,2013,United States
+eez2013,CP,score,218,94.82,2013,Canada
+eez2013,CP,status,163,88.27,2013,United States
+eez2013,CP,status,218,89.65,2013,Canada
+eez2013,CP,trend,163,-0.07,2013,United States
+eez2013,CP,trend,218,-0.06,2013,Canada
+eez2013,CS,future,163,58.55,2013,United States
+eez2013,CS,future,218,59.53,2013,Canada
+eez2013,CS,pressures,163,26.76,2013,United States
+eez2013,CS,pressures,218,12.4,2013,Canada
+eez2013,CS,resilience,163,54.16,2013,United States
+eez2013,CS,resilience,218,69.05,2013,Canada
+eez2013,CS,score,163,62.13,2013,United States
+eez2013,CS,score,218,54.84,2013,Canada
+eez2013,CS,status,163,65.72,2013,United States
+eez2013,CS,status,218,50.16,2013,Canada
+eez2013,CS,trend,163,-0.3,2013,United States
+eez2013,CS,trend,218,0.0,2013,Canada
+eez2013,CW,future,163,86.19,2013,United States
+eez2013,CW,future,218,100.0,2013,Canada
+eez2013,CW,pressures,163,52.63,2013,United States
+eez2013,CW,pressures,218,23.3,2013,Canada
+eez2013,CW,resilience,163,39.94,2013,United States
+eez2013,CW,resilience,218,67.93,2013,Canada
+eez2013,CW,score,163,81.64,2013,United States
+eez2013,CW,score,218,95.71,2013,Canada
+eez2013,CW,status,163,77.09,2013,United States
+eez2013,CW,status,218,91.41,2013,Canada
+eez2013,CW,trend,163,0.24,2013,United States
+eez2013,CW,trend,218,-0.06,2013,Canada
+eez2013,ECO,future,163,100.0,2013,United States
+eez2013,ECO,future,218,100.0,2013,Canada
+eez2013,ECO,pressures,163,22.62,2013,United States
+eez2013,ECO,pressures,218,13.61,2013,Canada
+eez2013,ECO,resilience,163,79.29,2013,United States
+eez2013,ECO,resilience,218,82.34,2013,Canada
+eez2013,ECO,score,163,99.91,2013,United States
+eez2013,ECO,score,218,100.0,2013,Canada
+eez2013,ECO,status,163,99.82,2013,United States
+eez2013,ECO,status,218,100.0,2013,Canada
+eez2013,ECO,trend,163,0.07,2013,United States
+eez2013,ECO,trend,218,0.02,2013,Canada
+eez2013,FIS,future,163,61.85,2013,United States
+eez2013,FIS,future,218,38.24,2013,Canada
+eez2013,FIS,pressures,163,25.91,2013,United States
+eez2013,FIS,pressures,218,19.84,2013,Canada
+eez2013,FIS,resilience,163,72.27,2013,United States
+eez2013,FIS,resilience,218,77.83,2013,Canada
+eez2013,FIS,score,163,58.58,2013,United States
+eez2013,FIS,score,218,35.17,2013,Canada
+eez2013,FIS,status,163,55.3,2013,United States
+eez2013,FIS,status,218,32.1,2013,Canada
+eez2013,FIS,trend,163,-0.05,2013,United States
+eez2013,FIS,trend,218,0.0,2013,Canada
+eez2013,FP,future,163,60.56,2013,United States
+eez2013,FP,future,218,45.62,2013,Canada
+eez2013,FP,pressures,163,NA,2013,United States
+eez2013,FP,pressures,218,NA,2013,Canada
+eez2013,FP,resilience,163,NA,2013,United States
+eez2013,FP,resilience,218,NA,2013,Canada
+eez2013,FP,score,163,57.36,2013,United States
+eez2013,FP,score,218,41.61,2013,Canada
+eez2013,FP,status,163,54.16,2013,United States
+eez2013,FP,status,218,37.6,2013,Canada
+eez2013,FP,trend,163,-0.05,2013,United States
+eez2013,FP,trend,218,0.02,2013,Canada
+eez2013,HAB,future,163,77.8,2013,United States
+eez2013,HAB,future,218,100.0,2013,Canada
+eez2013,HAB,pressures,163,25.51,2013,United States
+eez2013,HAB,pressures,218,15.82,2013,Canada
+eez2013,HAB,resilience,163,73.13,2013,United States
+eez2013,HAB,resilience,218,83.99,2013,Canada
+eez2013,HAB,score,163,76.82,2013,United States
+eez2013,HAB,score,218,92.34,2013,Canada
+eez2013,HAB,status,163,75.84,2013,United States
+eez2013,HAB,status,218,84.68,2013,Canada
+eez2013,HAB,trend,163,-0.2,2013,United States
+eez2013,HAB,trend,218,-0.03,2013,Canada
+eez2013,ICO,future,163,75.49,2013,United States
+eez2013,ICO,future,218,77.52,2013,Canada
+eez2013,ICO,pressures,163,29.47,2013,United States
+eez2013,ICO,pressures,218,15.73,2013,Canada
+eez2013,ICO,resilience,163,72.03,2013,United States
+eez2013,ICO,resilience,218,79.76,2013,Canada
+eez2013,ICO,score,163,70.11,2013,United States
+eez2013,ICO,score,218,69.79,2013,Canada
+eez2013,ICO,status,163,64.72,2013,United States
+eez2013,ICO,status,218,62.06,2013,Canada
+eez2013,ICO,trend,163,0.04,2013,United States
+eez2013,ICO,trend,218,0.06,2013,Canada
+eez2013,Index,future,163,77.92,2013,United States
+eez2013,Index,future,218,81.94,2013,Canada
+eez2013,Index,score,163,76.29,2013,United States
+eez2013,Index,score,218,76.53,2013,Canada
+eez2013,LE,future,163,71.18,2013,United States
+eez2013,LE,future,218,94.35,2013,Canada
+eez2013,LE,pressures,163,NA,2013,United States
+eez2013,LE,pressures,218,NA,2013,Canada
+eez2013,LE,resilience,163,NA,2013,United States
+eez2013,LE,resilience,218,NA,2013,Canada
+eez2013,LE,score,163,77.74,2013,United States
+eez2013,LE,score,218,90.54,2013,Canada
+eez2013,LE,status,163,84.29,2013,United States
+eez2013,LE,status,218,86.74,2013,Canada
+eez2013,LE,trend,163,-0.34,2013,United States
+eez2013,LE,trend,218,0.03,2013,Canada
+eez2013,LIV,future,163,42.35,2013,United States
+eez2013,LIV,future,218,88.69,2013,Canada
+eez2013,LIV,pressures,163,23.59,2013,United States
+eez2013,LIV,pressures,218,13.74,2013,Canada
+eez2013,LIV,resilience,163,59.47,2013,United States
+eez2013,LIV,resilience,218,70.04,2013,Canada
+eez2013,LIV,score,163,55.56,2013,United States
+eez2013,LIV,score,218,81.09,2013,Canada
+eez2013,LIV,status,163,68.77,2013,United States
+eez2013,LIV,status,218,73.48,2013,Canada
+eez2013,LIV,trend,163,-0.75,2013,United States
+eez2013,LIV,trend,218,0.03,2013,Canada
+eez2013,LSP,future,163,76.91,2013,United States
+eez2013,LSP,future,218,29.3,2013,Canada
+eez2013,LSP,pressures,163,35.36,2013,United States
+eez2013,LSP,pressures,218,16.31,2013,Canada
+eez2013,LSP,resilience,163,49.03,2013,United States
+eez2013,LSP,resilience,218,77.03,2013,Canada
+eez2013,LSP,score,163,74.96,2013,United States
+eez2013,LSP,score,218,25.95,2013,Canada
+eez2013,LSP,status,163,73.02,2013,United States
+eez2013,LSP,status,218,22.59,2013,Canada
+eez2013,LSP,trend,163,0.01,2013,United States
+eez2013,LSP,trend,218,0.14,2013,Canada
+eez2013,MAR,future,163,11.28,2013,United States
+eez2013,MAR,future,218,100.0,2013,Canada
+eez2013,MAR,pressures,163,20.46,2013,United States
+eez2013,MAR,pressures,218,10.44,2013,Canada
+eez2013,MAR,resilience,163,54.04,2013,United States
+eez2013,MAR,resilience,218,73.92,2013,Canada
+eez2013,MAR,score,163,10.91,2013,United States
+eez2013,MAR,score,218,89.05,2013,Canada
+eez2013,MAR,status,163,10.53,2013,United States
+eez2013,MAR,status,218,78.1,2013,Canada
+eez2013,MAR,trend,163,-0.06,2013,United States
+eez2013,MAR,trend,218,0.13,2013,Canada
+eez2013,NP,future,163,93.02,2013,United States
+eez2013,NP,future,218,100.0,2013,Canada
+eez2013,NP,pressures,163,17.41,2013,United States
+eez2013,NP,pressures,218,11.29,2013,Canada
+eez2013,NP,resilience,163,72.31,2013,United States
+eez2013,NP,resilience,218,80.27,2013,Canada
+eez2013,NP,score,163,84.35,2013,United States
+eez2013,NP,score,218,90.79,2013,Canada
+eez2013,NP,status,163,75.67,2013,United States
+eez2013,NP,status,218,81.58,2013,Canada
+eez2013,NP,trend,163,0.07,2013,United States
+eez2013,NP,trend,218,0.19,2013,Canada
+eez2013,SP,future,163,76.2,2013,United States
+eez2013,SP,future,218,53.41,2013,Canada
+eez2013,SP,pressures,163,NA,2013,United States
+eez2013,SP,pressures,218,NA,2013,Canada
+eez2013,SP,resilience,163,NA,2013,United States
+eez2013,SP,resilience,218,NA,2013,Canada
+eez2013,SP,score,163,72.53,2013,United States
+eez2013,SP,score,218,47.87,2013,Canada
+eez2013,SP,status,163,68.87,2013,United States
+eez2013,SP,status,218,42.33,2013,Canada
+eez2013,SP,trend,163,0.03,2013,United States
+eez2013,SP,trend,218,0.1,2013,Canada
+eez2013,SPP,future,163,94.94,2013,United States
+eez2013,SPP,future,218,100.0,2013,Canada
+eez2013,SPP,pressures,163,28.33,2013,United States
+eez2013,SPP,pressures,218,19.51,2013,Canada
+eez2013,SPP,resilience,163,56.06,2013,United States
+eez2013,SPP,resilience,218,73.57,2013,Canada
+eez2013,SPP,score,163,94.34,2013,United States
+eez2013,SPP,score,218,95.46,2013,Canada
+eez2013,SPP,status,163,93.73,2013,United States
+eez2013,SPP,status,218,90.92,2013,Canada
+eez2013,SPP,trend,163,-0.12,2013,United States
+eez2013,SPP,trend,218,-0.11,2013,Canada
+eez2013,TR,future,163,48.23,2013,United States
+eez2013,TR,future,218,66.47,2013,Canada
+eez2013,TR,pressures,163,37.14,2013,United States
+eez2013,TR,pressures,218,19.15,2013,Canada
+eez2013,TR,resilience,163,39.94,2013,United States
+eez2013,TR,resilience,218,67.93,2013,Canada
+eez2013,TR,score,163,47.93,2013,United States
+eez2013,TR,score,218,58.18,2013,Canada
+eez2013,TR,status,163,47.64,2013,United States
+eez2013,TR,status,218,49.9,2013,Canada
+eez2013,TR,trend,163,0.0,2013,United States
+eez2013,TR,trend,218,0.26,2013,Canada
+eez2014,AO,future,163,100.0,2014,United States
+eez2014,AO,future,218,100.0,2014,Canada
+eez2014,AO,pressures,163,20.3,2014,United States
+eez2014,AO,pressures,218,14.62,2014,Canada
+eez2014,AO,resilience,163,77.32,2014,United States
+eez2014,AO,resilience,218,79.62,2014,Canada
+eez2014,AO,score,163,100.0,2014,United States
+eez2014,AO,score,218,97.17,2014,Canada
+eez2014,AO,status,163,100.0,2014,United States
+eez2014,AO,status,218,94.34,2014,Canada
+eez2014,AO,trend,163,0.01,2014,United States
+eez2014,AO,trend,218,0.02,2014,Canada
+eez2014,BD,future,163,86.51,2014,United States
+eez2014,BD,future,218,100.0,2014,Canada
+eez2014,BD,pressures,163,NA,2014,United States
+eez2014,BD,pressures,218,NA,2014,Canada
+eez2014,BD,resilience,163,NA,2014,United States
+eez2014,BD,resilience,218,NA,2014,Canada
+eez2014,BD,score,163,85.61,2014,United States
+eez2014,BD,score,218,94.01,2014,Canada
+eez2014,BD,status,163,84.71,2014,United States
+eez2014,BD,status,218,88.01,2014,Canada
+eez2014,BD,trend,163,-0.15,2014,United States
+eez2014,BD,trend,218,-0.07,2014,Canada
+eez2014,CP,future,163,100.0,2014,United States
+eez2014,CP,future,218,100.0,2014,Canada
+eez2014,CP,pressures,163,21.65,2014,United States
+eez2014,CP,pressures,218,22.26,2014,Canada
+eez2014,CP,resilience,163,74.13,2014,United States
+eez2014,CP,resilience,218,85.83,2014,Canada
+eez2014,CP,score,163,94.13,2014,United States
+eez2014,CP,score,218,96.04,2014,Canada
+eez2014,CP,status,163,88.25,2014,United States
+eez2014,CP,status,218,92.09,2014,Canada
+eez2014,CP,trend,163,-0.05,2014,United States
+eez2014,CP,trend,218,-0.05,2014,Canada
+eez2014,CS,future,163,58.6,2014,United States
+eez2014,CS,future,218,59.54,2014,Canada
+eez2014,CS,pressures,163,26.51,2014,United States
+eez2014,CS,pressures,218,12.37,2014,Canada
+eez2014,CS,resilience,163,54.16,2014,United States
+eez2014,CS,resilience,218,69.07,2014,Canada
+eez2014,CS,score,163,62.16,2014,United States
+eez2014,CS,score,218,54.85,2014,Canada
+eez2014,CS,status,163,65.72,2014,United States
+eez2014,CS,status,218,50.16,2014,Canada
+eez2014,CS,trend,163,-0.3,2014,United States
+eez2014,CS,trend,218,0.0,2014,Canada
+eez2014,CW,future,163,85.94,2014,United States
+eez2014,CW,future,218,100.0,2014,Canada
+eez2014,CW,pressures,163,52.47,2014,United States
+eez2014,CW,pressures,218,23.31,2014,Canada
+eez2014,CW,resilience,163,39.94,2014,United States
+eez2014,CW,resilience,218,67.92,2014,Canada
+eez2014,CW,score,163,81.56,2014,United States
+eez2014,CW,score,218,95.71,2014,Canada
+eez2014,CW,status,163,77.18,2014,United States
+eez2014,CW,status,218,91.42,2014,Canada
+eez2014,CW,trend,163,0.23,2014,United States
+eez2014,CW,trend,218,-0.08,2014,Canada
+eez2014,ECO,future,163,100.0,2014,United States
+eez2014,ECO,future,218,100.0,2014,Canada
+eez2014,ECO,pressures,163,22.52,2014,United States
+eez2014,ECO,pressures,218,13.6,2014,Canada
+eez2014,ECO,resilience,163,79.36,2014,United States
+eez2014,ECO,resilience,218,81.99,2014,Canada
+eez2014,ECO,score,163,99.91,2014,United States
+eez2014,ECO,score,218,100.0,2014,Canada
+eez2014,ECO,status,163,99.82,2014,United States
+eez2014,ECO,status,218,100.0,2014,Canada
+eez2014,ECO,trend,163,0.07,2014,United States
+eez2014,ECO,trend,218,0.02,2014,Canada
+eez2014,FIS,future,163,59.06,2014,United States
+eez2014,FIS,future,218,40.24,2014,Canada
+eez2014,FIS,pressures,163,25.85,2014,United States
+eez2014,FIS,pressures,218,19.89,2014,Canada
+eez2014,FIS,resilience,163,72.27,2014,United States
+eez2014,FIS,resilience,218,77.82,2014,Canada
+eez2014,FIS,score,163,56.28,2014,United States
+eez2014,FIS,score,218,36.22,2014,Canada
+eez2014,FIS,status,163,53.5,2014,United States
+eez2014,FIS,status,218,32.2,2014,Canada
+eez2014,FIS,trend,163,-0.07,2014,United States
+eez2014,FIS,trend,218,0.09,2014,Canada
+eez2014,FP,future,163,57.43,2014,United States
+eez2014,FP,future,218,48.24,2014,Canada
+eez2014,FP,pressures,163,NA,2014,United States
+eez2014,FP,pressures,218,NA,2014,Canada
+eez2014,FP,resilience,163,NA,2014,United States
+eez2014,FP,resilience,218,NA,2014,Canada
+eez2014,FP,score,163,54.73,2014,United States
+eez2014,FP,score,218,43.24,2014,Canada
+eez2014,FP,status,163,52.03,2014,United States
+eez2014,FP,status,218,38.24,2014,Canada
+eez2014,FP,trend,163,-0.07,2014,United States
+eez2014,FP,trend,218,0.09,2014,Canada
+eez2014,HAB,future,163,78.27,2014,United States
+eez2014,HAB,future,218,100.0,2014,Canada
+eez2014,HAB,pressures,163,24.86,2014,United States
+eez2014,HAB,pressures,218,16.06,2014,Canada
+eez2014,HAB,resilience,163,73.13,2014,United States
+eez2014,HAB,resilience,218,83.99,2014,Canada
+eez2014,HAB,score,163,76.97,2014,United States
+eez2014,HAB,score,218,92.55,2014,Canada
+eez2014,HAB,status,163,75.68,2014,United States
+eez2014,HAB,status,218,85.11,2014,Canada
+eez2014,HAB,trend,163,-0.19,2014,United States
+eez2014,HAB,trend,218,-0.02,2014,Canada
+eez2014,ICO,future,163,75.27,2014,United States
+eez2014,ICO,future,218,77.56,2014,Canada
+eez2014,ICO,pressures,163,30.35,2014,United States
+eez2014,ICO,pressures,218,15.74,2014,Canada
+eez2014,ICO,resilience,163,72.03,2014,United States
+eez2014,ICO,resilience,218,79.75,2014,Canada
+eez2014,ICO,score,163,70.0,2014,United States
+eez2014,ICO,score,218,69.81,2014,Canada
+eez2014,ICO,status,163,64.72,2014,United States
+eez2014,ICO,status,218,62.06,2014,Canada
+eez2014,ICO,trend,163,0.04,2014,United States
+eez2014,ICO,trend,218,0.06,2014,Canada
+eez2014,Index,future,163,77.01,2014,United States
+eez2014,Index,future,218,81.21,2014,Canada
+eez2014,Index,score,163,75.51,2014,United States
+eez2014,Index,score,218,76.18,2014,Canada
+eez2014,LE,future,163,71.2,2014,United States
+eez2014,LE,future,218,94.32,2014,Canada
+eez2014,LE,pressures,163,NA,2014,United States
+eez2014,LE,pressures,218,NA,2014,Canada
+eez2014,LE,resilience,163,NA,2014,United States
+eez2014,LE,resilience,218,NA,2014,Canada
+eez2014,LE,score,163,77.75,2014,United States
+eez2014,LE,score,218,90.53,2014,Canada
+eez2014,LE,status,163,84.29,2014,United States
+eez2014,LE,status,218,86.74,2014,Canada
+eez2014,LE,trend,163,-0.34,2014,United States
+eez2014,LE,trend,218,0.03,2014,Canada
+eez2014,LIV,future,163,42.39,2014,United States
+eez2014,LIV,future,218,88.63,2014,Canada
+eez2014,LIV,pressures,163,23.46,2014,United States
+eez2014,LIV,pressures,218,13.71,2014,Canada
+eez2014,LIV,resilience,163,59.52,2014,United States
+eez2014,LIV,resilience,218,69.77,2014,Canada
+eez2014,LIV,score,163,55.58,2014,United States
+eez2014,LIV,score,218,81.06,2014,Canada
+eez2014,LIV,status,163,68.77,2014,United States
+eez2014,LIV,status,218,73.48,2014,Canada
+eez2014,LIV,trend,163,-0.75,2014,United States
+eez2014,LIV,trend,218,0.03,2014,Canada
+eez2014,LSP,future,163,76.92,2014,United States
+eez2014,LSP,future,218,28.94,2014,Canada
+eez2014,LSP,pressures,163,35.3,2014,United States
+eez2014,LSP,pressures,218,16.31,2014,Canada
+eez2014,LSP,resilience,163,49.03,2014,United States
+eez2014,LSP,resilience,218,77.01,2014,Canada
+eez2014,LSP,score,163,74.97,2014,United States
+eez2014,LSP,score,218,25.88,2014,Canada
+eez2014,LSP,status,163,73.02,2014,United States
+eez2014,LSP,status,218,22.82,2014,Canada
+eez2014,LSP,trend,163,0.01,2014,United States
+eez2014,LSP,trend,218,0.1,2014,Canada
+eez2014,MAR,future,163,10.97,2014,United States
+eez2014,MAR,future,218,98.9,2014,Canada
+eez2014,MAR,pressures,163,20.35,2014,United States
+eez2014,MAR,pressures,218,10.44,2014,Canada
+eez2014,MAR,resilience,163,54.04,2014,United States
+eez2014,MAR,resilience,218,73.9,2014,Canada
+eez2014,MAR,score,163,10.65,2014,United States
+eez2014,MAR,score,218,87.7,2014,Canada
+eez2014,MAR,status,163,10.34,2014,United States
+eez2014,MAR,status,218,76.5,2014,Canada
+eez2014,MAR,trend,163,-0.08,2014,United States
+eez2014,MAR,trend,218,0.12,2014,Canada
+eez2014,NP,future,163,92.09,2014,United States
+eez2014,NP,future,218,100.0,2014,Canada
+eez2014,NP,pressures,163,17.24,2014,United States
+eez2014,NP,pressures,218,11.34,2014,Canada
+eez2014,NP,resilience,163,72.31,2014,United States
+eez2014,NP,resilience,218,80.26,2014,Canada
+eez2014,NP,score,163,83.66,2014,United States
+eez2014,NP,score,218,90.54,2014,Canada
+eez2014,NP,status,163,75.24,2014,United States
+eez2014,NP,status,218,81.09,2014,Canada
+eez2014,NP,trend,163,0.06,2014,United States
+eez2014,NP,trend,218,0.02,2014,Canada
+eez2014,SP,future,163,76.1,2014,United States
+eez2014,SP,future,218,53.25,2014,Canada
+eez2014,SP,pressures,163,NA,2014,United States
+eez2014,SP,pressures,218,NA,2014,Canada
+eez2014,SP,resilience,163,NA,2014,United States
+eez2014,SP,resilience,218,NA,2014,Canada
+eez2014,SP,score,163,72.48,2014,United States
+eez2014,SP,score,218,47.84,2014,Canada
+eez2014,SP,status,163,68.87,2014,United States
+eez2014,SP,status,218,42.44,2014,Canada
+eez2014,SP,trend,163,0.03,2014,United States
+eez2014,SP,trend,218,0.08,2014,Canada
+eez2014,SPP,future,163,94.76,2014,United States
+eez2014,SPP,future,218,100.0,2014,Canada
+eez2014,SPP,pressures,163,28.91,2014,United States
+eez2014,SPP,pressures,218,19.52,2014,Canada
+eez2014,SPP,resilience,163,56.06,2014,United States
+eez2014,SPP,resilience,218,73.56,2014,Canada
+eez2014,SPP,score,163,94.25,2014,United States
+eez2014,SPP,score,218,95.46,2014,Canada
+eez2014,SPP,status,163,93.73,2014,United States
+eez2014,SPP,status,218,90.92,2014,Canada
+eez2014,SPP,trend,163,-0.12,2014,United States
+eez2014,SPP,trend,218,-0.11,2014,Canada
+eez2014,TR,future,163,42.24,2014,United States
+eez2014,TR,future,218,56.76,2014,Canada
+eez2014,TR,pressures,163,36.72,2014,United States
+eez2014,TR,pressures,218,19.08,2014,Canada
+eez2014,TR,resilience,163,39.94,2014,United States
+eez2014,TR,resilience,218,67.92,2014,Canada
+eez2014,TR,score,163,42.99,2014,United States
+eez2014,TR,score,218,51.86,2014,Canada
+eez2014,TR,status,163,43.74,2014,United States
+eez2014,TR,status,218,46.97,2014,Canada
+eez2014,TR,trend,163,-0.07,2014,United States
+eez2014,TR,trend,218,0.07,2014,Canada
+eez2015,AO,future,163,100.0,2015,United States
+eez2015,AO,future,218,100.0,2015,Canada
+eez2015,AO,pressures,163,20.48,2015,United States
+eez2015,AO,pressures,218,14.62,2015,Canada
+eez2015,AO,resilience,163,77.11,2015,United States
+eez2015,AO,resilience,218,79.57,2015,Canada
+eez2015,AO,score,163,100.0,2015,United States
+eez2015,AO,score,218,97.38,2015,Canada
+eez2015,AO,status,163,100.0,2015,United States
+eez2015,AO,status,218,94.76,2015,Canada
+eez2015,AO,trend,163,0.0,2015,United States
+eez2015,AO,trend,218,0.02,2015,Canada
+eez2015,BD,future,163,86.2,2015,United States
+eez2015,BD,future,218,100.0,2015,Canada
+eez2015,BD,pressures,163,NA,2015,United States
+eez2015,BD,pressures,218,NA,2015,Canada
+eez2015,BD,resilience,163,NA,2015,United States
+eez2015,BD,resilience,218,NA,2015,Canada
+eez2015,BD,score,163,85.32,2015,United States
+eez2015,BD,score,218,93.99,2015,Canada
+eez2015,BD,status,163,84.45,2015,United States
+eez2015,BD,status,218,87.98,2015,Canada
+eez2015,BD,trend,163,-0.15,2015,United States
+eez2015,BD,trend,218,-0.05,2015,Canada
+eez2015,CP,future,163,95.81,2015,United States
+eez2015,CP,future,218,100.0,2015,Canada
+eez2015,CP,pressures,163,25.56,2015,United States
+eez2015,CP,pressures,218,22.55,2015,Canada
+eez2015,CP,resilience,163,73.75,2015,United States
+eez2015,CP,resilience,218,85.72,2015,Canada
+eez2015,CP,score,163,90.84,2015,United States
+eez2015,CP,score,218,97.41,2015,Canada
+eez2015,CP,status,163,85.86,2015,United States
+eez2015,CP,status,218,94.82,2015,Canada
+eez2015,CP,trend,163,-0.06,2015,United States
+eez2015,CP,trend,218,0.02,2015,Canada
+eez2015,CS,future,163,58.27,2015,United States
+eez2015,CS,future,218,59.47,2015,Canada
+eez2015,CS,pressures,163,27.79,2015,United States
+eez2015,CS,pressures,218,12.75,2015,Canada
+eez2015,CS,resilience,163,53.95,2015,United States
+eez2015,CS,resilience,218,69.02,2015,Canada
+eez2015,CS,score,163,62.0,2015,United States
+eez2015,CS,score,218,54.81,2015,Canada
+eez2015,CS,status,163,65.72,2015,United States
+eez2015,CS,status,218,50.16,2015,Canada
+eez2015,CS,trend,163,-0.3,2015,United States
+eez2015,CS,trend,218,0.0,2015,Canada
+eez2015,CW,future,163,71.86,2015,United States
+eez2015,CW,future,218,98.92,2015,Canada
+eez2015,CW,pressures,163,52.89,2015,United States
+eez2015,CW,pressures,218,23.35,2015,Canada
+eez2015,CW,resilience,163,39.72,2015,United States
+eez2015,CW,resilience,218,67.87,2015,Canada
+eez2015,CW,score,163,74.46,2015,United States
+eez2015,CW,score,218,95.17,2015,Canada
+eez2015,CW,status,163,77.06,2015,United States
+eez2015,CW,status,218,91.42,2015,Canada
+eez2015,CW,trend,163,-0.04,2015,United States
+eez2015,CW,trend,218,-0.1,2015,Canada
+eez2015,ECO,future,163,100.0,2015,United States
+eez2015,ECO,future,218,100.0,2015,Canada
+eez2015,ECO,pressures,163,23.17,2015,United States
+eez2015,ECO,pressures,218,13.84,2015,Canada
+eez2015,ECO,resilience,163,79.37,2015,United States
+eez2015,ECO,resilience,218,82.12,2015,Canada
+eez2015,ECO,score,163,99.91,2015,United States
+eez2015,ECO,score,218,100.0,2015,Canada
+eez2015,ECO,status,163,99.82,2015,United States
+eez2015,ECO,status,218,100.0,2015,Canada
+eez2015,ECO,trend,163,0.07,2015,United States
+eez2015,ECO,trend,218,0.02,2015,Canada
+eez2015,FIS,future,163,56.82,2015,United States
+eez2015,FIS,future,218,41.29,2015,Canada
+eez2015,FIS,pressures,163,26.03,2015,United States
+eez2015,FIS,pressures,218,19.79,2015,Canada
+eez2015,FIS,resilience,163,72.05,2015,United States
+eez2015,FIS,resilience,218,77.76,2015,Canada
+eez2015,FIS,score,163,54.56,2015,United States
+eez2015,FIS,score,218,36.8,2015,Canada
+eez2015,FIS,status,163,52.3,2015,United States
+eez2015,FIS,status,218,32.3,2015,Canada
+eez2015,FIS,trend,163,-0.1,2015,United States
+eez2015,FIS,trend,218,0.13,2015,Canada
+eez2015,FP,future,163,55.28,2015,United States
+eez2015,FP,future,218,47.49,2015,Canada
+eez2015,FP,pressures,163,NA,2015,United States
+eez2015,FP,pressures,218,NA,2015,Canada
+eez2015,FP,resilience,163,NA,2015,United States
+eez2015,FP,resilience,218,NA,2015,Canada
+eez2015,FP,score,163,53.08,2015,United States
+eez2015,FP,score,218,42.42,2015,Canada
+eez2015,FP,status,163,50.88,2015,United States
+eez2015,FP,status,218,37.36,2015,Canada
+eez2015,FP,trend,163,-0.1,2015,United States
+eez2015,FP,trend,218,0.12,2015,Canada
+eez2015,HAB,future,163,77.58,2015,United States
+eez2015,HAB,future,218,100.0,2015,Canada
+eez2015,HAB,pressures,163,26.04,2015,United States
+eez2015,HAB,pressures,218,16.12,2015,Canada
+eez2015,HAB,resilience,163,72.91,2015,United States
+eez2015,HAB,resilience,218,83.93,2015,Canada
+eez2015,HAB,score,163,76.37,2015,United States
+eez2015,HAB,score,218,92.52,2015,Canada
+eez2015,HAB,status,163,75.17,2015,United States
+eez2015,HAB,status,218,85.04,2015,Canada
+eez2015,HAB,trend,163,-0.18,2015,United States
+eez2015,HAB,trend,218,0.0,2015,Canada
+eez2015,ICO,future,163,75.5,2015,United States
+eez2015,ICO,future,218,77.48,2015,Canada
+eez2015,ICO,pressures,163,29.79,2015,United States
+eez2015,ICO,pressures,218,15.77,2015,Canada
+eez2015,ICO,resilience,163,71.81,2015,United States
+eez2015,ICO,resilience,218,79.69,2015,Canada
+eez2015,ICO,score,163,70.22,2015,United States
+eez2015,ICO,score,218,69.77,2015,Canada
+eez2015,ICO,status,163,64.94,2015,United States
+eez2015,ICO,status,218,62.06,2015,Canada
+eez2015,ICO,trend,163,0.04,2015,United States
+eez2015,ICO,trend,218,0.06,2015,Canada
+eez2015,Index,future,163,73.2,2015,United States
+eez2015,Index,future,218,80.57,2015,Canada
+eez2015,Index,score,163,73.1,2015,United States
+eez2015,Index,score,218,76.04,2015,Canada
+eez2015,LE,future,163,71.11,2015,United States
+eez2015,LE,future,218,94.28,2015,Canada
+eez2015,LE,pressures,163,NA,2015,United States
+eez2015,LE,pressures,218,NA,2015,Canada
+eez2015,LE,resilience,163,NA,2015,United States
+eez2015,LE,resilience,218,NA,2015,Canada
+eez2015,LE,score,163,77.7,2015,United States
+eez2015,LE,score,218,90.51,2015,Canada
+eez2015,LE,status,163,84.29,2015,United States
+eez2015,LE,status,218,86.74,2015,Canada
+eez2015,LE,trend,163,-0.34,2015,United States
+eez2015,LE,trend,218,0.03,2015,Canada
+eez2015,LIV,future,163,42.22,2015,United States
+eez2015,LIV,future,218,88.56,2015,Canada
+eez2015,LIV,pressures,163,24.22,2015,United States
+eez2015,LIV,pressures,218,14.1,2015,Canada
+eez2015,LIV,resilience,163,59.52,2015,United States
+eez2015,LIV,resilience,218,69.87,2015,Canada
+eez2015,LIV,score,163,55.49,2015,United States
+eez2015,LIV,score,218,81.02,2015,Canada
+eez2015,LIV,status,163,68.77,2015,United States
+eez2015,LIV,status,218,73.48,2015,Canada
+eez2015,LIV,trend,163,-0.75,2015,United States
+eez2015,LIV,trend,218,0.03,2015,Canada
+eez2015,LSP,future,163,76.51,2015,United States
+eez2015,LSP,future,218,27.67,2015,Canada
+eez2015,LSP,pressures,163,35.85,2015,United States
+eez2015,LSP,pressures,218,16.45,2015,Canada
+eez2015,LSP,resilience,163,48.82,2015,United States
+eez2015,LSP,resilience,218,76.96,2015,Canada
+eez2015,LSP,score,163,74.77,2015,United States
+eez2015,LSP,score,218,25.25,2015,Canada
+eez2015,LSP,status,163,73.02,2015,United States
+eez2015,LSP,status,218,22.84,2015,Canada
+eez2015,LSP,trend,163,0.01,2015,United States
+eez2015,LSP,trend,218,0.02,2015,Canada
+eez2015,MAR,future,163,11.14,2015,United States
+eez2015,MAR,future,218,90.35,2015,Canada
+eez2015,MAR,pressures,163,21.07,2015,United States
+eez2015,MAR,pressures,218,10.64,2015,Canada
+eez2015,MAR,resilience,163,53.82,2015,United States
+eez2015,MAR,resilience,218,73.85,2015,Canada
+eez2015,MAR,score,163,10.66,2015,United States
+eez2015,MAR,score,218,81.37,2015,Canada
+eez2015,MAR,status,163,10.17,2015,United States
+eez2015,MAR,status,218,72.39,2015,Canada
+eez2015,MAR,trend,163,-0.02,2015,United States
+eez2015,MAR,trend,218,0.06,2015,Canada
+eez2015,NP,future,163,70.94,2015,United States
+eez2015,NP,future,218,100.0,2015,Canada
+eez2015,NP,pressures,163,17.51,2015,United States
+eez2015,NP,pressures,218,11.32,2015,Canada
+eez2015,NP,resilience,163,72.09,2015,United States
+eez2015,NP,resilience,218,80.21,2015,Canada
+eez2015,NP,score,163,67.67,2015,United States
+eez2015,NP,score,218,91.4,2015,Canada
+eez2015,NP,status,163,64.4,2015,United States
+eez2015,NP,status,218,82.81,2015,Canada
+eez2015,NP,trend,163,-0.12,2015,United States
+eez2015,NP,trend,218,-0.02,2015,Canada
+eez2015,SP,future,163,76.01,2015,United States
+eez2015,SP,future,218,52.58,2015,Canada
+eez2015,SP,pressures,163,NA,2015,United States
+eez2015,SP,pressures,218,NA,2015,Canada
+eez2015,SP,resilience,163,NA,2015,United States
+eez2015,SP,resilience,218,NA,2015,Canada
+eez2015,SP,score,163,72.49,2015,United States
+eez2015,SP,score,218,47.51,2015,Canada
+eez2015,SP,status,163,68.98,2015,United States
+eez2015,SP,status,218,42.45,2015,Canada
+eez2015,SP,trend,163,0.02,2015,United States
+eez2015,SP,trend,218,0.04,2015,Canada
+eez2015,SPP,future,163,94.81,2015,United States
+eez2015,SPP,future,218,100.0,2015,Canada
+eez2015,SPP,pressures,163,28.52,2015,United States
+eez2015,SPP,pressures,218,19.48,2015,Canada
+eez2015,SPP,resilience,163,55.84,2015,United States
+eez2015,SPP,resilience,218,73.5,2015,Canada
+eez2015,SPP,score,163,94.27,2015,United States
+eez2015,SPP,score,218,95.46,2015,Canada
+eez2015,SPP,status,163,93.73,2015,United States
+eez2015,SPP,status,218,90.92,2015,Canada
+eez2015,SPP,trend,163,-0.12,2015,United States
+eez2015,SPP,trend,218,-0.11,2015,Canada
+eez2015,TR,future,163,46.53,2015,United States
+eez2015,TR,future,218,52.95,2015,Canada
+eez2015,TR,pressures,163,38.77,2015,United States
+eez2015,TR,pressures,218,19.65,2015,Canada
+eez2015,TR,resilience,163,39.72,2015,United States
+eez2015,TR,resilience,218,67.87,2015,Canada
+eez2015,TR,score,163,47.45,2015,United States
+eez2015,TR,score,218,49.76,2015,Canada
+eez2015,TR,status,163,48.37,2015,United States
+eez2015,TR,status,218,46.57,2015,Canada
+eez2015,TR,trend,163,-0.06,2015,United States
+eez2015,TR,trend,218,-0.03,2015,Canada
+eez2016,AO,future,163,100.0,2016,United States
+eez2016,AO,future,218,100.0,2016,Canada
+eez2016,AO,pressures,163,20.52,2016,United States
+eez2016,AO,pressures,218,14.3,2016,Canada
+eez2016,AO,resilience,163,77.15,2016,United States
+eez2016,AO,resilience,218,79.83,2016,Canada
+eez2016,AO,score,163,100.0,2016,United States
+eez2016,AO,score,218,97.41,2016,Canada
+eez2016,AO,status,163,100.0,2016,United States
+eez2016,AO,status,218,94.83,2016,Canada
+eez2016,AO,trend,163,0.0,2016,United States
+eez2016,AO,trend,218,0.01,2016,Canada
+eez2016,BD,future,163,86.22,2016,United States
+eez2016,BD,future,218,100.0,2016,Canada
+eez2016,BD,pressures,163,NA,2016,United States
+eez2016,BD,pressures,218,NA,2016,Canada
+eez2016,BD,resilience,163,NA,2016,United States
+eez2016,BD,resilience,218,NA,2016,Canada
+eez2016,BD,score,163,85.37,2016,United States
+eez2016,BD,score,218,94.34,2016,Canada
+eez2016,BD,status,163,84.51,2016,United States
+eez2016,BD,status,218,88.67,2016,Canada
+eez2016,BD,trend,163,-0.15,2016,United States
+eez2016,BD,trend,218,-0.04,2016,Canada
+eez2016,CP,future,163,87.74,2016,United States
+eez2016,CP,future,218,100.0,2016,Canada
+eez2016,CP,pressures,163,26.84,2016,United States
+eez2016,CP,pressures,218,25.23,2016,Canada
+eez2016,CP,resilience,163,73.83,2016,United States
+eez2016,CP,resilience,218,86.25,2016,Canada
+eez2016,CP,score,163,84.53,2016,United States
+eez2016,CP,score,218,98.19,2016,Canada
+eez2016,CP,status,163,81.33,2016,United States
+eez2016,CP,status,218,96.37,2016,Canada
+eez2016,CP,trend,163,-0.11,2016,United States
+eez2016,CP,trend,218,0.08,2016,Canada
+eez2016,CS,future,163,58.21,2016,United States
+eez2016,CS,future,218,59.54,2016,Canada
+eez2016,CS,pressures,163,28.11,2016,United States
+eez2016,CS,pressures,218,12.56,2016,Canada
+eez2016,CS,resilience,163,53.99,2016,United States
+eez2016,CS,resilience,218,69.28,2016,Canada
+eez2016,CS,score,163,61.97,2016,United States
+eez2016,CS,score,218,54.85,2016,Canada
+eez2016,CS,status,163,65.72,2016,United States
+eez2016,CS,status,218,50.16,2016,Canada
+eez2016,CS,trend,163,-0.3,2016,United States
+eez2016,CS,trend,218,0.0,2016,Canada
+eez2016,CW,future,163,72.02,2016,United States
+eez2016,CW,future,218,97.14,2016,Canada
+eez2016,CW,pressures,163,52.75,2016,United States
+eez2016,CW,pressures,218,23.16,2016,Canada
+eez2016,CW,resilience,163,39.77,2016,United States
+eez2016,CW,resilience,218,68.13,2016,Canada
+eez2016,CW,score,163,74.57,2016,United States
+eez2016,CW,score,218,94.26,2016,Canada
+eez2016,CW,status,163,77.11,2016,United States
+eez2016,CW,status,218,91.38,2016,Canada
+eez2016,CW,trend,163,-0.03,2016,United States
+eez2016,CW,trend,218,-0.13,2016,Canada
+eez2016,ECO,future,163,100.0,2016,United States
+eez2016,ECO,future,218,100.0,2016,Canada
+eez2016,ECO,pressures,163,23.32,2016,United States
+eez2016,ECO,pressures,218,13.64,2016,Canada
+eez2016,ECO,resilience,163,79.43,2016,United States
+eez2016,ECO,resilience,218,82.47,2016,Canada
+eez2016,ECO,score,163,99.91,2016,United States
+eez2016,ECO,score,218,100.0,2016,Canada
+eez2016,ECO,status,163,99.82,2016,United States
+eez2016,ECO,status,218,100.0,2016,Canada
+eez2016,ECO,trend,163,0.07,2016,United States
+eez2016,ECO,trend,218,0.02,2016,Canada
+eez2016,FIS,future,163,57.65,2016,United States
+eez2016,FIS,future,218,40.61,2016,Canada
+eez2016,FIS,pressures,163,26.1,2016,United States
+eez2016,FIS,pressures,218,19.45,2016,Canada
+eez2016,FIS,resilience,163,72.1,2016,United States
+eez2016,FIS,resilience,218,78.03,2016,Canada
+eez2016,FIS,score,163,55.12,2016,United States
+eez2016,FIS,score,218,36.45,2016,Canada
+eez2016,FIS,status,163,52.6,2016,United States
+eez2016,FIS,status,218,32.3,2016,Canada
+eez2016,FIS,trend,163,-0.08,2016,United States
+eez2016,FIS,trend,218,0.1,2016,Canada
+eez2016,FP,future,163,56.05,2016,United States
+eez2016,FP,future,218,44.31,2016,Canada
+eez2016,FP,pressures,163,NA,2016,United States
+eez2016,FP,pressures,218,NA,2016,Canada
+eez2016,FP,resilience,163,NA,2016,United States
+eez2016,FP,resilience,218,NA,2016,Canada
+eez2016,FP,score,163,53.6,2016,United States
+eez2016,FP,score,218,40.04,2016,Canada
+eez2016,FP,status,163,51.15,2016,United States
+eez2016,FP,status,218,35.77,2016,Canada
+eez2016,FP,trend,163,-0.08,2016,United States
+eez2016,FP,trend,218,0.08,2016,Canada
+eez2016,HAB,future,163,77.74,2016,United States
+eez2016,HAB,future,218,100.0,2016,Canada
+eez2016,HAB,pressures,163,26.32,2016,United States
+eez2016,HAB,pressures,218,16.69,2016,Canada
+eez2016,HAB,resilience,163,72.96,2016,United States
+eez2016,HAB,resilience,218,84.2,2016,Canada
+eez2016,HAB,score,163,76.52,2016,United States
+eez2016,HAB,score,218,93.21,2016,Canada
+eez2016,HAB,status,163,75.3,2016,United States
+eez2016,HAB,status,218,86.42,2016,Canada
+eez2016,HAB,trend,163,-0.18,2016,United States
+eez2016,HAB,trend,218,0.03,2016,Canada
+eez2016,ICO,future,163,73.94,2016,United States
+eez2016,ICO,future,218,75.02,2016,Canada
+eez2016,ICO,pressures,163,30.31,2016,United States
+eez2016,ICO,pressures,218,15.59,2016,Canada
+eez2016,ICO,resilience,163,71.86,2016,United States
+eez2016,ICO,resilience,218,79.96,2016,Canada
+eez2016,ICO,score,163,69.11,2016,United States
+eez2016,ICO,score,218,67.95,2016,Canada
+eez2016,ICO,status,163,64.28,2016,United States
+eez2016,ICO,status,218,60.88,2016,Canada
+eez2016,ICO,trend,163,0.02,2016,United States
+eez2016,ICO,trend,218,0.03,2016,Canada
+eez2016,Index,future,163,69.38,2016,United States
+eez2016,Index,future,218,77.87,2016,Canada
+eez2016,Index,score,163,70.06,2016,United States
+eez2016,Index,score,218,74.11,2016,Canada
+eez2016,LE,future,163,71.09,2016,United States
+eez2016,LE,future,218,94.34,2016,Canada
+eez2016,LE,pressures,163,NA,2016,United States
+eez2016,LE,pressures,218,NA,2016,Canada
+eez2016,LE,resilience,163,NA,2016,United States
+eez2016,LE,resilience,218,NA,2016,Canada
+eez2016,LE,score,163,77.69,2016,United States
+eez2016,LE,score,218,90.54,2016,Canada
+eez2016,LE,status,163,84.29,2016,United States
+eez2016,LE,status,218,86.74,2016,Canada
+eez2016,LE,trend,163,-0.34,2016,United States
+eez2016,LE,trend,218,0.03,2016,Canada
+eez2016,LIV,future,163,42.19,2016,United States
+eez2016,LIV,future,218,88.68,2016,Canada
+eez2016,LIV,pressures,163,24.42,2016,United States
+eez2016,LIV,pressures,218,13.9,2016,Canada
+eez2016,LIV,resilience,163,59.57,2016,United States
+eez2016,LIV,resilience,218,70.14,2016,Canada
+eez2016,LIV,score,163,55.48,2016,United States
+eez2016,LIV,score,218,81.08,2016,Canada
+eez2016,LIV,status,163,68.77,2016,United States
+eez2016,LIV,status,218,73.48,2016,Canada
+eez2016,LIV,trend,163,-0.75,2016,United States
+eez2016,LIV,trend,218,0.03,2016,Canada
+eez2016,LSP,future,163,76.37,2016,United States
+eez2016,LSP,future,218,27.7,2016,Canada
+eez2016,LSP,pressures,163,35.91,2016,United States
+eez2016,LSP,pressures,218,16.22,2016,Canada
+eez2016,LSP,resilience,163,48.86,2016,United States
+eez2016,LSP,resilience,218,77.22,2016,Canada
+eez2016,LSP,score,163,74.7,2016,United States
+eez2016,LSP,score,218,25.27,2016,Canada
+eez2016,LSP,status,163,73.02,2016,United States
+eez2016,LSP,status,218,22.84,2016,Canada
+eez2016,LSP,trend,163,0.0,2016,United States
+eez2016,LSP,trend,218,0.02,2016,Canada
+eez2016,MAR,future,163,10.42,2016,United States
+eez2016,MAR,future,218,76.85,2016,Canada
+eez2016,MAR,pressures,163,21.23,2016,United States
+eez2016,MAR,pressures,218,10.47,2016,Canada
+eez2016,MAR,resilience,163,53.87,2016,United States
+eez2016,MAR,resilience,218,74.11,2016,Canada
+eez2016,MAR,score,163,10.0,2016,United States
+eez2016,MAR,score,218,71.55,2016,Canada
+eez2016,MAR,status,163,9.59,2016,United States
+eez2016,MAR,status,218,66.26,2016,Canada
+eez2016,MAR,trend,163,-0.03,2016,United States
+eez2016,MAR,trend,218,-0.08,2016,Canada
+eez2016,NP,future,163,41.09,2016,United States
+eez2016,NP,future,218,80.86,2016,Canada
+eez2016,NP,pressures,163,17.5,2016,United States
+eez2016,NP,pressures,218,11.21,2016,Canada
+eez2016,NP,resilience,163,72.14,2016,United States
+eez2016,NP,resilience,218,80.47,2016,Canada
+eez2016,NP,score,163,43.87,2016,United States
+eez2016,NP,score,218,75.88,2016,Canada
+eez2016,NP,status,163,46.64,2016,United States
+eez2016,NP,status,218,70.9,2016,Canada
+eez2016,NP,trend,163,-0.45,2016,United States
+eez2016,NP,trend,218,-0.13,2016,Canada
+eez2016,SP,future,163,75.16,2016,United States
+eez2016,SP,future,218,51.36,2016,Canada
+eez2016,SP,pressures,163,NA,2016,United States
+eez2016,SP,pressures,218,NA,2016,Canada
+eez2016,SP,resilience,163,NA,2016,United States
+eez2016,SP,resilience,218,NA,2016,Canada
+eez2016,SP,score,163,71.9,2016,United States
+eez2016,SP,score,218,46.61,2016,Canada
+eez2016,SP,status,163,68.65,2016,United States
+eez2016,SP,status,218,41.86,2016,Canada
+eez2016,SP,trend,163,0.01,2016,United States
+eez2016,SP,trend,218,0.02,2016,Canada
+eez2016,SPP,future,163,94.7,2016,United States
+eez2016,SPP,future,218,100.0,2016,Canada
+eez2016,SPP,pressures,163,28.93,2016,United States
+eez2016,SPP,pressures,218,19.26,2016,Canada
+eez2016,SPP,resilience,163,55.89,2016,United States
+eez2016,SPP,resilience,218,73.77,2016,Canada
+eez2016,SPP,score,163,94.22,2016,United States
+eez2016,SPP,score,218,95.46,2016,Canada
+eez2016,SPP,status,163,93.73,2016,United States
+eez2016,SPP,status,218,90.92,2016,Canada
+eez2016,SPP,trend,163,-0.12,2016,United States
+eez2016,SPP,trend,218,-0.11,2016,Canada
+eez2016,TR,future,163,46.19,2016,United States
+eez2016,TR,future,218,51.19,2016,Canada
+eez2016,TR,pressures,163,39.33,2016,United States
+eez2016,TR,pressures,218,19.52,2016,Canada
+eez2016,TR,resilience,163,39.77,2016,United States
+eez2016,TR,resilience,218,68.13,2016,Canada
+eez2016,TR,score,163,47.12,2016,United States
+eez2016,TR,score,218,48.97,2016,Canada
+eez2016,TR,status,163,48.04,2016,United States
+eez2016,TR,status,218,46.75,2016,Canada
+eez2016,TR,trend,163,-0.06,2016,United States
+eez2016,TR,trend,218,-0.1,2016,Canada
