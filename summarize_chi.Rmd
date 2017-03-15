@@ -21,6 +21,7 @@ library(purrr)
 library(rgeos)
 library(parallel)
 library(tmap)
+library(RColorBrewer)
 
 wgs_crs <- CRS("+proj=longlat +datum=WGS84 +no_defs +ellps=WGS84 +towgs84=0,0,0")
 
@@ -60,7 +61,15 @@ t <- threenm[as.character(threenm@data$rgn_name) %in% c(as.character(mci_rgns@da
 three_ras <- rasterize(t,ocean,t@data$sp_id,progress='text', filename = file.path(dir_M,'git-annex/mci-report/three_nm.tif'),overwrite=T)
 }
 
+#baffin bay and davis strait
+bbds_map <- readOGR(file.path(dir_M,'git-annex/mci-report/shapefiles'),'baffin', verbose = F)
+
+bbds <- spTransform(bbds_map,CRS("+proj=moll +lon_0=0 +x_0=0 +y_0=0 +ellps=WGS84 +units=m +no_defs"))
+
 three_ras <- raster(file.path(dir_M,'git-annex/mci-report/three_nm.tif'))
+three_ras_bc <- crop(three_ras,bc)%>%mask(bc)
+three_ras_ne <- crop(three_ras,ne)%>%mask(ne)
+three_ras_gd <- crop(three_ras,bbds)%>%mask(bbds)
 
 ```
 
@@ -208,17 +217,46 @@ ggplot(df,aes(x = rgn,y = perc,fill = factor(cat)))+
 
 ```{r avg_impact}
 
+avg <- df%>%
+       dplyr::select(pressure,rgn,mean)%>%
+        unique()
+
+#expand color palette
+colourCount = length(unique(avg$pressure))
+getPalette = colorRampPalette(brewer.pal(9, "Set1"))
+
+ggplot(avg) + geom_bar(aes(y = mean, x = reorder(rgn,-mean),fill = factor(pressure)), stat = "identity")+
+  theme(axis.text.x = element_text(angle = 70, hjust = 1))+
+  labs(x = "Region",
+       y = "Mean Impact Score",
+       title = "All Pressures") + 
+  scale_fill_manual("Pressure",values = getPalette(colourCount))
+
+#without climate stressors
+climate  = c("sst","uv","ocean_acidification")
+avg_noclim <- avg%>%
+                filter(!pressure%in% climate)
+
+ggplot(avg_noclim) + geom_bar(aes(y = mean, x = reorder(rgn,-mean), fill = factor(pressure)), stat = "identity")+
+  theme(axis.text.x = element_text(angle = 70, hjust = 1))+
+  labs(x = "Region",
+       y = "Mean Impact Score",
+       title = "Without climate pressures") + 
+  scale_fill_manual("Pressure",values = getPalette(colourCount))
+
+```
+
+```{r datatable}
 #create small dataframe that assigns each pressure a short name for display purposes
 s <- data.frame(pressure = unique(df$pressure),
                 short    = c("art","ddf","dnd-hb","dnd-lb","inorganic","oa","pel-hb","pel-lb","fert","pest","sst","uv"))
 
-avg <- df%>%
+avg_dt = avg%>%
         mutate(shortname = s$short[match(pressure,s$pressure)])%>%
-       dplyr::select(shortname,rgn,mean)%>%
-        unique()%>%
+        dplyr::select(-pressure)%>%
         spread(shortname,mean)
 
-DT::datatable(avg)
+DT::datatable(avg_dt)
 
 ```
 
@@ -245,11 +283,22 @@ tm_legend(text.size=1.5,
 
 
 get_bc_vals <- function(layer){
+  
+    if(basename(layer) %in% c("artisanal_fishing_combo.tif","inorganic_combo.tif","plumes_fert_combo.tif","plumes_pest_combo.tif")){
       
        vals = raster(layer)%>%
+              crop(three_ras_bc)%>%
+              mask(three_ras_bc)%>%
+              raster::extract(bc,method = 'simple',progress='text')%>%
+              setNames(bc@data$rgn_nam)
+      
+    }else{
+      
+        vals = raster(layer)%>%
               crop(bc)%>%
               raster::extract(bc,method = 'simple',progress='text')%>%
               setNames(bc@data$rgn_nam)
+    }  
 return(vals)
 }
 
@@ -356,6 +405,33 @@ ggplot(df,aes(x = rgn,y = perc,fill = factor(cat)))+
 
 ```{r}
 
+avg <- df%>%
+       dplyr::select(pressure,rgn,mean)%>%
+        unique()
+
+ggplot(avg) + geom_bar(aes(y = mean, x = reorder(rgn,-mean),fill = factor(pressure)), stat = "identity")+
+  theme(axis.text.x = element_text(angle = 90, hjust = 1))+
+  labs(x = "Region",
+       y = "Mean Impact Score",
+       title = "All pressures") + 
+  scale_fill_manual("Pressure",values = getPalette(colourCount))
+
+#without climate pressures
+
+avg_noclim <- avg%>%
+                filter(!pressure%in% climate)
+
+ggplot(avg_noclim) + geom_bar(aes(y = mean, x = reorder(rgn,-mean),fill = factor(pressure)), stat = "identity")+
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))+
+  labs(x = "Region",
+       y = "Mean Impact Score",
+       title = "Without climate pressures") + 
+  scale_fill_manual("Pressure",values = getPalette(colourCount))
+
+```
+
+```{r}
+
 #create small dataframe that assigns each pressure a short name for display purposes
 s <- data.frame(pressure = unique(df$pressure),
                 short    = c("art","ddf","dnd-hb","dnd-lb","inorganic","oa","pel-hb","pel-lb","fert","pest","sst","uv"))
@@ -393,11 +469,22 @@ tm_legend(text.size=1.5,
 ```{r get_ne_vals}
 
 get_ne_vals <- function(layer){
+  
+    if(basename(layer) %in% c("artisanal_fishing_combo.tif","inorganic_combo.tif","plumes_fert_combo.tif","plumes_pest_combo.tif")){
       
        vals = raster(layer)%>%
+              crop(three_ras_ne)%>%
+              mask(three_ras_ne)%>%
+              raster::extract(ne,method = 'simple',progress='text')%>%
+              setNames(ne@data$rgn_nam)
+      
+    }else{
+      
+        vals = raster(layer)%>%
               crop(ne)%>%
               raster::extract(ne,method = 'simple',progress='text')%>%
               setNames(ne@data$rgn_nam)
+    }  
 return(vals)
 }
 
@@ -502,6 +589,32 @@ ggplot(df,aes(x = rgn,y = perc,fill = factor(cat)))+
 
 ```
 
+```{r}
+
+avg <- df%>%
+       dplyr::select(pressure,rgn,mean)%>%
+        unique()
+
+ggplot(avg) + geom_bar(aes(y = mean, x = reorder(rgn,-mean),fill = factor(pressure)), stat = "identity")+
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))+
+  labs(x = "Region",
+       y = "Mean Impact Score",
+       title = "All pressures") + 
+  scale_fill_manual("Pressure",values = getPalette(colourCount))
+
+#without climate pressures
+
+avg_noclim <- avg%>%
+                filter(!pressure%in% climate)
+
+ggplot(avg_noclim) + geom_bar(aes(y = mean, x = reorder(rgn,-mean),fill = factor(pressure)), stat = "identity")+
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))+
+  labs(x = "Region",
+       y = "Mean Impact Score",
+       title = "Without climate pressures") + 
+  scale_fill_manual("Pressure",values = getPalette(colourCount))
+
+```
 
 ```{r}
 
@@ -525,10 +638,6 @@ DT::datatable(avg)
 
 ```{r}
 
-bbds_map <- readOGR(file.path(dir_M,'git-annex/mci-report/shapefiles'),'baffin', verbose = F)
-
-bbds <- spTransform(bbds_map,CRS("+proj=moll +lon_0=0 +x_0=0 +y_0=0 +ellps=WGS84 +units=m +no_defs"))
-
 plot(bbds_map, col = 'lightblue', main = "Baffin Bay & Davis Strait")
 
 ```
@@ -537,13 +646,25 @@ plot(bbds_map, col = 'lightblue', main = "Baffin Bay & Davis Strait")
 ```{r get_bbds_vals}
 
 get_bbds_vals <- function(layer){
+  
+    if(basename(layer) %in% c("artisanal_fishing_combo.tif","inorganic_combo.tif","plumes_fert_combo.tif","plumes_pest_combo.tif")){
       
        vals = raster(layer)%>%
+              crop(three_ras_gd)%>%
+              mask(three_ras_gd)%>%
+              raster::extract(bbds,method = 'simple',progress='text')%>%
+              setNames(bbds@data$rgn_nam)
+      
+    }else{
+      
+        vals = raster(layer)%>%
               crop(bbds)%>%
               raster::extract(bbds,method = 'simple',progress='text')%>%
               setNames(bbds@data$rgn_nam)
+    }  
 return(vals)
 }
+
 
 
 #check to see if file exists.
