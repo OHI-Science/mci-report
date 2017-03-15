@@ -45,6 +45,7 @@ write_csv(scores, 'scores_raw.csv')
 
 ```
 
+<!--
 # Scores by goal
 
 Plot scores across all years for each region, by goal and by dimension.  
@@ -52,8 +53,9 @@ Plot scores across all years for each region, by goal and by dimension.
 * Two regions across five years on each small multiple
 * Plot 1: Current status, likely future state, and score
 * Plot 2: Pressures and resilience per goal
+-->
 
-``` {r plot score status future by goal}
+``` {r plot score status future by goal, eval = FALSE}
 
 scores <- read_csv('scores_raw.csv') %>%
   spread(dimension, score) %>%
@@ -74,7 +76,7 @@ print(status_facets)
 ```
 
 
-``` {r plot pressure resilience by goal}
+``` {r plot pressure resilience by goal, eval = FALSE}
 
 scores1 <- scores %>%
   filter(!is.na(pressures))
@@ -101,21 +103,106 @@ Plot scores across all years for each region, by goal
 
 scores <- read_csv('scores_raw.csv') %>%
   spread(dimension, score) %>%
-  mutate(rgn_name = as.factor(rgn_name),
-         year = year - 2000) %>%
+  mutate(rgn_name = as.factor(rgn_name)) %>%
   filter(goal != 'Index')
 
-status_by_rgn <- ggplot(scores %>%
-                          filter(!goal %in% c('ECO', 'LIV', 'FIS', 'MAR', 'SPP', 'HAB', 'LSP', 'ICO')), 
-                        aes(x = year, y = status, color = goal, group = goal)) +
-  theme_bw() +
+goalnames <- scores$goal[nchar(scores$goal) == 2] %>%
+  unique()
+# "AO" "BD" "CP" "CS" "CW" "FP" "LE" "NP" "SP" "TR"
+# pal_goals <- RColorBrewer::brewer.pal(length(goalnames), 'Spectral') %>%
+#   setNames(goalnames)
+# 
+#        AO        BD        CP        CS        CW        FP        LE        NP        SP        TR 
+# "#9E0142" "#D53E4F" "#F46D43" "#FDAE61" "#FEE08B" "#E6F598" "#ABDDA4" "#66C2A5" "#3288BD" "#5E4FA2" 
+
+pal_goals <- c("brown4", "red1", "orange2", "yellow1", "green4", "cyan3", "blue4", "grey50", "purple2", "grey10") %>%
+  setNames(c('AO', 'BD', 'CP', 'CS', 'CW', 'FP', 'LE', 'NP', 'SP', 'TR'))
+
+pal_subgoals <- c(pal_goals['SP'],
+                  pal_goals['SP'],
+                  pal_goals['BD'],
+                  pal_goals['BD'],
+                  pal_goals['LE'],
+                  pal_goals['LE'],
+                  pal_goals['FP'],
+                  pal_goals['FP']) %>%
+  setNames(c('ICO', 'LSP', 'SPP', 'HAB', 'LIV', 'ECO', 'FIS', 'MAR'))
+
+
+labels <- c("AO" = 'Artisanal Opportunities',
+            "BD" = 'Biodiversity',
+            "CP" = 'Coastal Protection',
+            "CS" = 'Carbon Storage',
+            "CW" = 'Clean Waters',
+            "FP" = 'Food Provision',
+            "LE" = 'Livelihoods and Economies',
+            "NP" = 'Natural Products',
+            "SP" = 'Sense of Place',
+            "TR" = 'Tourism and Recreation',
+            "ICO" = 'Iconic Species',
+            "LSP" = 'Lasting Special Places',
+            "SPP" = 'Species',
+            "HAB" = 'Habitats',
+            "LIV" = 'Coastal Livelihoods',
+            "ECO" = 'Coastal Economies',
+            "FIS" = 'Wild-Capture Fisheries',
+            "MAR" = 'Mariculture')
+
+pal <- c(pal_goals, pal_subgoals) %>%
+  setNames(labels)
+
+
+scores1 <- scores %>%
+  mutate(goal_type = ifelse(goal %in% goalnames, 'goal', 'subgoal'),
+         label = labels[goal])
+
+status_by_rgn <- ggplot(scores1 %>% filter(goal_type == 'goal'), 
+                        aes(x = year, y = status, color = label, group = goal)) +
+  # theme_bw() +
+  theme(panel.grid.minor = element_blank(),
+        panel.border = element_blank()) +
   geom_line(size = 1.5, alpha = .8) +
+  # geom_line(data = scores1 %>% filter(goal_type == 'subgoal_dash'), 
+  #           linetype = 2, size = .75, alpha = .8) +
+  # geom_line(data = scores1 %>% filter(goal_type == 'subgoal_dot'), 
+  #           linetype = 3, size = .75, alpha = .8) +
   # geom_line(aes(y = future), linetype = 3, alpha = .5) +
   # geom_line(aes(y = score), linetype = 1) +
-  scale_color_brewer(palette = 'Spectral') + #    Paired    Set2  Set3)
+  scale_color_manual(values = pal) + 
   scale_y_continuous(limits = c(0, 100)) +
   facet_wrap(~ rgn_name)
 
 print(status_by_rgn)
+
+```
+
+``` {r plot subgoals by country}
+
+goal_subgoal <- list(c('FP', 'FIS', 'MAR'),
+                     c('BD', 'SPP', 'HAB'),
+                     c('SP', 'LSP', 'ICO'))
+
+for (i in seq_along(goal_subgoal)) {
+  df <- scores1 %>%
+    filter(goal %in% goal_subgoal[[i]])
+  
+  status_by_subgoals <- ggplot(df %>% filter(goal_type == 'goal'), 
+                          aes(x = year, y = status, color = label, group = goal)) +
+    # theme_bw() +
+    theme(panel.grid.minor = element_blank(),
+          panel.border = element_blank()) +
+    geom_line(size = 1.5, alpha = .3) +
+    geom_line(data = df %>% 
+                filter(goal_type == 'subgoal'),
+              aes(linetype = label),
+              size = .75, alpha = .8) +
+    scale_color_manual(values = pal, guide = FALSE) + 
+    scale_y_continuous(limits = c(0, 100)) +
+    facet_wrap(~ rgn_name) +
+    labs(title = df %>% filter(goal_type == 'goal') %>% .$label %>% .[1])
+  
+  print(status_by_subgoals)
+}
+
 
 ```
