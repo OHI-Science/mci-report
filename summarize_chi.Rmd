@@ -46,8 +46,17 @@ bc  = readOGR('shapefiles','ohibc_rgn', verbose = F)%>%
 ne  = readOGR('shapefiles','ohine_rgn', verbose = F)%>%
       spTransform(CRS("+proj=moll +lon_0=0 +x_0=0 +y_0=0 +ellps=WGS84 +units=m +no_defs"))
 
+#baffin bay and davis strait
+bbds_map <- readOGR(file.path(dir_M,'git-annex/mci-report/shapefiles'),'baffin', verbose = F)
+
+bbds <- spTransform(bbds_map,CRS("+proj=moll +lon_0=0 +x_0=0 +y_0=0 +ellps=WGS84 +units=m +no_defs"))
+bbds@data <- bbds@data%>%dplyr::select(-id)
+
 mci_rgns = readOGR(dsn = file.path(dir_M,'git-annex/mci-report/shapefiles'),layer = 'mci_rgns', verbose=F)%>%
     spTransform(CRS("+proj=moll +lon_0=0 +x_0=0 +y_0=0 +ellps=WGS84 +units=m +no_defs"))
+mci_rgns@data <- mci_rgns@data%>%dplyr::select(-ohi_rgn)
+
+mci_rgns = rbind(mci_rgns,bbds)
 
 if(!file.exists(file.path(dir_M,"git-annex/mci-report/three_nm.tif"))){
 
@@ -55,21 +64,17 @@ if(!file.exists(file.path(dir_M,"git-annex/mci-report/three_nm.tif"))){
 threenm <- readOGR(dsn = file.path(dir_M,'git-annex/globalprep/spatial/d2014/data'),layer = 'regions_offshore3nm_mol')
 
 #remove all polygons outside of our regions
-t <- threenm[as.character(threenm@data$rgn_name) %in% c(as.character(mci_rgns@data$rgn_nam),"United States","Russia","Canada"),]
+t <- threenm[as.character(threenm@data$rgn_name) %in% c(as.character(mci_rgns@data$rgn_nam),"United States","Russia","Canada","Greenland"),]
 
 #rasterize to use for masking (I think this is faster than masking with shapefile)
 three_ras <- rasterize(t,ocean,t@data$sp_id,progress='text', filename = file.path(dir_M,'git-annex/mci-report/three_nm.tif'),overwrite=T)
 }
 
-#baffin bay and davis strait
-bbds_map <- readOGR(file.path(dir_M,'git-annex/mci-report/shapefiles'),'baffin', verbose = F)
-
-bbds <- spTransform(bbds_map,CRS("+proj=moll +lon_0=0 +x_0=0 +y_0=0 +ellps=WGS84 +units=m +no_defs"))
 
 three_ras <- raster(file.path(dir_M,'git-annex/mci-report/three_nm.tif'))
 three_ras_bc <- crop(three_ras,bc)%>%mask(bc)
 three_ras_ne <- crop(three_ras,ne)%>%mask(ne)
-three_ras_gd <- crop(three_ras,bbds)%>%mask(bbds)
+#three_ras_gd <- crop(three_ras,bbds)%>%mask(bbds)
 
 ```
 
@@ -159,7 +164,7 @@ df = data.frame()
 for (i in 1:12){
    
      #get the pressure name
-     for (j in 1:25){
+     for (j in 1:26){
        
      pres_name = names(mci_prs_vals[i])
      region   = names(mci_prs_vals[[i]])[j]
@@ -631,149 +636,3 @@ avg <- df%>%
 DT::datatable(avg)
 
 ```
-
-***
-
-# Baffin Bay and Davis Strait
-
-```{r}
-
-plot(bbds_map, col = 'lightblue', main = "Baffin Bay & Davis Strait")
-
-```
-
-
-```{r get_bbds_vals}
-
-get_bbds_vals <- function(layer){
-  
-    if(basename(layer) %in% c("artisanal_fishing_combo.tif","inorganic_combo.tif","plumes_fert_combo.tif","plumes_pest_combo.tif")){
-      
-       vals = raster(layer)%>%
-              crop(three_ras_gd)%>%
-              mask(three_ras_gd)%>%
-              raster::extract(bbds,method = 'simple',progress='text')%>%
-              setNames(bbds@data$rgn_nam)
-      
-    }else{
-      
-        vals = raster(layer)%>%
-              crop(bbds)%>%
-              raster::extract(bbds,method = 'simple',progress='text')%>%
-              setNames(bbds@data$rgn_nam)
-    }  
-return(vals)
-}
-
-
-
-#check to see if file exists.
-if(!file.exists(file.path(dir_M,"git-annex/mci-report/bbds_prs_values.RData"))){
-
-  #list of all values within each region for each pressure
-bbds_prs_vals <- mclapply(layers,get_bbds_vals,mc.cores=12)%>%
-               setNames(basename(layers))%>%
-               setNames(str_replace(names(.),"_combo.tif",""))
-
-  save(bbds_prs_vals, file=file.path(dir_M,"git-annex/mci-report/bbds_prs_values.RData"))
-}
-  #vals is the list, let's try to use map to calculate mean, max
-  
-  load(file.path(dir_M,"git-annex/mci-report/bbds_prs_values.RData"))
-
-```
-
-
-```{r}
-
-#quants is a list of length 12, one for each pressure layer. Each layer has 5 quantiles
-bbds_quants = map(bbds_prs_vals,quant_func)
-q = bbds_quants%>%
-      as.data.frame()%>%
-          t()%>%
-          as.data.frame()%>%
-          tibble::rownames_to_column()%>%
-          mutate(pressure = str_replace(rowname,'_combo.tif',""))%>%
-          rename(verylow = `2.5%`,
-                 low     = `25%`,
-                 medium  = `50%`,
-                 high    = `75%`,
-                 veryhigh = `97.5%`)%>%
-          dplyr::select(pressure, verylow, low, medium, high, veryhigh)
-
-```
-
-### Proportional area and impact of stressors in the Baffin Bay & Davis Strait
-```{r}
-
-df = data.frame()
-
-for (i in 1:12){
-       
-     pres_name = names(bbds_prs_vals[i])
-     
-     #select the values
-      m = bbds_prs_vals[[pres_name]][[1]]
-      m = m[!is.na(m)]
-
-      h = filter(q,pressure == pres_name)
-  
-   n <- c(length(m[m<=h$verylow]),
-          length(m[m<=h$low & m>h$verylow]),
-          length(m[m<=h$high & m>h$low]),
-          length(m[m<=h$veryhigh & m>h$high]),
-          length(m[m>h$veryhigh]))
-   
-   d = data.frame(n)%>%
-        mutate(perc = round(n/length(m),3),
-               cat = c("verylow","low","medium","high","veryhigh"),
-               brk = c(0,2.5,25,75,97.5), #assigning breaks for plotting later
-               pressure = pres_name,
-               rgn = "Greenland",
-               mean = round(mean(m,na.rm=T),3),
-               max = round(max(m,na.rm=T),3),
-               total = round(sum(m,na.rm=T),3))
-     
-    df = rbind(df,d) 
- }
-
-```
-
-
-```{r}
-#by pressure
-df$cat <- factor(df$cat, levels = rev(c("verylow","low","medium","high","veryhigh")))
-
-ggplot(df,aes(x = pressure,y = perc,fill = factor(cat)))+
-         geom_bar(position = 'stack',stat = 'identity', alpha = 1) +
-  scale_fill_manual(values = c('verylow' = '#4dac26',
-                               'low' = '#b8e186', 
-                               'medium' = '#f1b6da',
-                               'high' = '#d01c8b',
-                               'veryhigh'='#67001f'),
-                     name = "Category",
-                     labels = c("verylow","low","medium","high","veryhigh",
-                    guide = guide_legend(reverse = TRUE))) +
-    coord_flip()+
-  labs(y = "Percent of region's area")
-
-
-```
-
-
-```{r}
-
-#create small dataframe that assigns each pressure a short name for display purposes
-s <- data.frame(pressure = unique(df$pressure),
-                short    = c("art","ddf","dnd-hb","dnd-lb","inorganic","oa","pel-hb","pel-lb","fert","pest","sst","uv"))
-
-avg <- df%>%
-        mutate(shortname = s$short[match(pressure,s$pressure)])%>%
-       dplyr::select(shortname,rgn,mean)%>%
-        unique()%>%
-        spread(shortname,mean)
-
-DT::datatable(avg)
-
-```
-
