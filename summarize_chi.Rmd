@@ -217,19 +217,19 @@ df = df%>%left_join(pres_names,by='pressure')%>%
                    ifelse(rgn == "United States South Atlantic","South Atlantic",
                    ifelse(rgn == "United States Alaska Pacific","Alaska Pacific",
                    ifelse(rgn == "United States Mid Atlantic","Mid-Atlantic",rgn))))))))))))))%>%
-      mutate(rgn_wrap = str_wrap(rgn, width = 20))
+      mutate(rgn_wrap = str_wrap(rgn, width = 20),
+             displayName_w = str_wrap(displayName,width = 30))
 
 #by pressure
 df$cat <- factor(df$cat, levels = rev(c("verylow","low","medium","high","veryhigh")))
 
-#climate change
-cc <- df%>%filter(pressure %in% c('sst','uv','ocean_acidification'))
+#climate change & pollution
+cc_pol<- df%>%filter(pressure %in% c('sst','uv','ocean_acidification','inorganic','plumes_fert','plumes_pest'))
+cc_pol$displayName = factor(cc_pol$displayName, levels=c('Inorganic Pollution','Organic Pollution','Nutrient Pollution','Ocean Acidification','Sea Surface Temperature','Ultraviolet Radiation'))
 #fisheries
 fis <- df%>%filter(pressure %in% c('artisanal_fishing','demersal_destructive_fishing','demersal_nondest_high_bycatch','demersal_nondest_low_bycatch',
                                    'pelagic_low_bycatch','pelagic_high_bycatch'))
-#pollution
-pol <- df%>%filter(pressure %in% c('inorganic','plumes_fert','plumes_pest'))
- 
+
 # function to plot each of the datasets 
 perc_plot <- function(data){ 
   ggplot(data) + 
@@ -244,14 +244,13 @@ perc_plot <- function(data){
                     guide = guide_legend(reverse = TRUE))) +
     coord_flip()+
   labs(y = "Percent of region's area")+
-  facet_wrap(~displayName)+
+  facet_wrap(~displayName_w)+
   theme(text = element_text(size = 14),
         axis.title.y=element_blank(),
         axis.text=element_text(size=14))
 }
 
-perc_plot(pol)
-perc_plot(cc)
+perc_plot(cc_pol)
 perc_plot(fis)
 ```
 
@@ -284,8 +283,8 @@ ggplot(avg) + geom_bar(aes(y = mean, x = reorder(rgn_wrap,-mean),fill = factor(d
        y = "Mean Impact Score",
        title = "All Pressures") + 
   scale_fill_manual("Pressure",values = getPalette(colourCount))+
-  theme(text = element_text(size = 12),
-        axis.text=element_text(size=12),
+  theme(text = element_text(size = 14),
+        axis.text=element_text(size=14),
         legend.justification = c(1, 1), 
         legend.position = c(1, 1))
 
@@ -300,8 +299,8 @@ ggplot(avg_noclim) + geom_bar(aes(y = mean, x = reorder(rgn_wrap,-mean), fill = 
        y = "Mean Impact Score",
        title = "Without climate pressures") + 
   scale_fill_manual("Pressure",values = getPalette(colourCount))+
-  theme(text = element_text(size = 12),
-        axis.text=element_text(size=12),
+  theme(text = element_text(size = 14),
+        axis.text=element_text(size=14),
         legend.justification = c(1, 1), 
         legend.position = c(1, 1))
 
@@ -380,7 +379,6 @@ bc_prs_vals <- mclapply(layers,get_bc_vals,mc.cores=12)%>%
 
 ```{r}
 
-
 #quants is a list of length 12, one for each pressure layer. Each layer has 5 quantiles
 bc_quants = map(bc_prs_vals,quant_func)
 q = bc_quants%>%
@@ -441,11 +439,26 @@ for (i in 1:12){
 
 
 ```{r}
+
+df = df%>%
+      left_join(pres_names,by='pressure')%>%
+      mutate(rgn_wrap = str_wrap(rgn, width = 20),
+             displayName_w = str_wrap(displayName,width = 30))
+
 #by pressure
 df$cat <- factor(df$cat, levels = rev(c("verylow","low","medium","high","veryhigh")))
 
-ggplot(df,aes(x = rgn,y = perc,fill = factor(cat)))+
-         geom_bar(position = 'stack',stat = 'identity', alpha = 1) +
+#climate change & pollution
+cc_pol<- df%>%filter(pressure %in% c('sst','uv','ocean_acidification','inorganic','plumes_fert','plumes_pest'))
+cc_pol$displayName = factor(cc_pol$displayName, levels=c('Inorganic Pollution','Organic Pollution','Nutrient Pollution','Ocean Acidification','Sea Surface Temperature','Ultraviolet Radiation'))
+#fisheries
+fis <- df%>%filter(pressure %in% c('artisanal_fishing','demersal_destructive_fishing','demersal_nondest_high_bycatch','demersal_nondest_low_bycatch',
+                                   'pelagic_low_bycatch','pelagic_high_bycatch'))
+
+# function to plot each of the datasets 
+perc_plot <- function(data){ 
+  ggplot(data) + 
+    geom_bar(aes(x = rgn,y = perc,fill = factor(cat)),position = 'stack',stat = 'identity', alpha = 1) +
   scale_fill_manual(values = c('verylow' = '#4dac26',
                                'low' = '#b8e186', 
                                'medium' = '#f1b6da',
@@ -456,35 +469,57 @@ ggplot(df,aes(x = rgn,y = perc,fill = factor(cat)))+
                     guide = guide_legend(reverse = TRUE))) +
     coord_flip()+
   labs(y = "Percent of region's area")+
-  facet_wrap(~pressure)
+  facet_wrap(~displayName_w)+
+  theme(text = element_text(size = 14),
+        axis.title.y=element_blank(),
+        axis.text=element_text(size=14))
+}
 
+perc_plot(cc_pol)
+perc_plot(fis)
 
 ```
 
-```{r}
+```{r bc datatable}
+
+df_dt = df%>%
+        mutate(shortname = s$short[match(pressure,s$pressure)])%>%
+        dplyr::select(perc,cat,rgn,shortname)
+
+DT::datatable(df_dt)
+
+```
+
+```{r, fig.width=12,fig.height=8}
 
 avg <- df%>%
-       dplyr::select(pressure,rgn,mean)%>%
+       dplyr::select(pressure,rgn,mean,displayName)%>%
         unique()
 
-ggplot(avg) + geom_bar(aes(y = mean, x = reorder(rgn,-mean),fill = factor(pressure)), stat = "identity")+
-  theme(axis.text.x = element_text(angle = 90, hjust = 1))+
+ggplot(avg) + geom_bar(aes(y = mean, x = reorder(rgn,-mean),fill = factor(displayName)), stat = "identity")+
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))+
   labs(x = "Region",
        y = "Mean Impact Score",
        title = "All pressures") + 
-  scale_fill_manual("Pressure",values = getPalette(colourCount))
+  scale_fill_manual("Pressure",values = getPalette(colourCount))+
+  theme(text = element_text(size = 12),
+        axis.text=element_text(size=12),
+        legend.text=element_text(size=10))
 
 #without climate pressures
 
 avg_noclim <- avg%>%
                 filter(!pressure%in% climate)
 
-ggplot(avg_noclim) + geom_bar(aes(y = mean, x = reorder(rgn,-mean),fill = factor(pressure)), stat = "identity")+
+ggplot(avg_noclim) + geom_bar(aes(y = mean, x = reorder(rgn,-mean),fill = factor(displayName)), stat = "identity")+
   theme(axis.text.x = element_text(angle = 45, hjust = 1))+
   labs(x = "Region",
        y = "Mean Impact Score",
        title = "Without climate pressures") + 
-  scale_fill_manual("Pressure",values = getPalette(colourCount))
+  scale_fill_manual("Pressure",values = getPalette(colourCount))+
+  theme(text = element_text(size = 12),
+        axis.text=element_text(size=12),
+        legend.text=element_text(size=10))
 
 ```
 
@@ -566,7 +601,6 @@ ne_prs_vals <- mclapply(layers,get_ne_vals,mc.cores=12)%>%
 
 ```{r}
 
-
 #quants is a list of length 12, one for each pressure layer. Each layer has 5 quantiles
 ne_quants = map(ne_prs_vals,quant_func)
 q = ne_quants%>%
@@ -627,11 +661,26 @@ for (i in 1:12){
 
 
 ```{r}
+
+df = df%>%
+      left_join(pres_names,by='pressure')%>%
+      mutate(rgn_wrap = str_wrap(rgn, width = 20),
+             displayName_w = str_wrap(displayName,width = 30))
+
 #by pressure
 df$cat <- factor(df$cat, levels = rev(c("verylow","low","medium","high","veryhigh")))
 
-ggplot(df,aes(x = rgn,y = perc,fill = factor(cat)))+
-         geom_bar(position = 'stack',stat = 'identity', alpha = 1) +
+#climate change & pollution
+cc_pol<- df%>%filter(pressure %in% c('sst','uv','ocean_acidification','inorganic','plumes_fert','plumes_pest'))
+cc_pol$displayName = factor(cc_pol$displayName, levels=c('Inorganic Pollution','Organic Pollution','Nutrient Pollution','Ocean Acidification','Sea Surface Temperature','Ultraviolet Radiation'))
+#fisheries
+fis <- df%>%filter(pressure %in% c('artisanal_fishing','demersal_destructive_fishing','demersal_nondest_high_bycatch','demersal_nondest_low_bycatch',
+                                   'pelagic_low_bycatch','pelagic_high_bycatch'))
+
+# function to plot each of the datasets 
+perc_plot <- function(data){ 
+  ggplot(data) + 
+    geom_bar(aes(x = rgn,y = perc,fill = factor(cat)),position = 'stack',stat = 'identity', alpha = 1) +
   scale_fill_manual(values = c('verylow' = '#4dac26',
                                'low' = '#b8e186', 
                                'medium' = '#f1b6da',
@@ -642,35 +691,61 @@ ggplot(df,aes(x = rgn,y = perc,fill = factor(cat)))+
                     guide = guide_legend(reverse = TRUE))) +
     coord_flip()+
   labs(y = "Percent of region's area")+
-  facet_wrap(~pressure)
+  facet_wrap(~displayName_w)+
+  theme(text = element_text(size = 14),
+        axis.title.y=element_blank(),
+        axis.text=element_text(size=14))
+}
 
+perc_plot(cc_pol)
+perc_plot(fis)
 
 ```
 
 ```{r}
 
+df_dt = df%>%
+        mutate(shortname = s$short[match(pressure,s$pressure)])%>%
+        dplyr::select(perc,cat,rgn,shortname)
+
+DT::datatable(df_dt)
+
+```
+
+```{r, fig.width = 10, fig.height = 8}
+
 avg <- df%>%
-       dplyr::select(pressure,rgn,mean)%>%
+       dplyr::select(pressure,rgn,mean,displayName)%>%
         unique()
 
-ggplot(avg) + geom_bar(aes(y = mean, x = reorder(rgn,-mean),fill = factor(pressure)), stat = "identity")+
+ggplot(avg) + geom_bar(aes(y = mean, x = reorder(rgn,-mean),fill = factor(displayName)), stat = "identity")+
   theme(axis.text.x = element_text(angle = 45, hjust = 1))+
   labs(x = "Region",
        y = "Mean Impact Score",
        title = "All pressures") + 
-  scale_fill_manual("Pressure",values = getPalette(colourCount))
+  scale_fill_manual("Pressure",values = getPalette(colourCount))+
+  theme(text = element_text(size = 12),
+        axis.text=element_text(size=12),
+        legend.justification = c(1, 1), 
+        legend.position = c(1, 1),
+        legend.text=element_text(size=8))
 
 #without climate pressures
 
 avg_noclim <- avg%>%
                 filter(!pressure%in% climate)
 
-ggplot(avg_noclim) + geom_bar(aes(y = mean, x = reorder(rgn,-mean),fill = factor(pressure)), stat = "identity")+
+ggplot(avg_noclim) + geom_bar(aes(y = mean, x = reorder(rgn,-mean),fill = factor(displayName)), stat = "identity")+
   theme(axis.text.x = element_text(angle = 45, hjust = 1))+
   labs(x = "Region",
        y = "Mean Impact Score",
        title = "Without climate pressures") + 
-  scale_fill_manual("Pressure",values = getPalette(colourCount))
+  scale_fill_manual("Pressure",values = getPalette(colourCount))+
+  theme(text = element_text(size = 12),
+        axis.text=element_text(size=12),
+        legend.justification = c(1, 1), 
+        legend.position = c(1, 1),
+        legend.text=element_text(size=8))
 
 ```
 
