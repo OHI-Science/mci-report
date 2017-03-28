@@ -1,0 +1,13 @@
+pressure,displayName
+artisanal_fishing,Artisanal Fishing
+demersal_destructive_fishing,Demersal Destructive Fishing
+demersal_nondest_high_bycatch,Demersal Nondestructive High Bycatch Fishing
+demersal_nondest_low_bycatch,Demersal Nondestructive Low Bycatch Fishing
+inorganic,Inorganic Pollution
+ocean_acidification,Ocean Acidification
+pelagic_high_bycatch,Pelagic High Bycatch Fishing
+pelagic_low_bycatch,Pelagic Low Bycatch Fishing
+plumes_fert,Nutrient Pollution
+plumes_pest,Organic Pollution
+sst,Sea Surface Temperature
+uv,Ultraviolet Radiation
