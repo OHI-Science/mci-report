@@ -7,7 +7,7 @@ output:
 ---
 
 ```{r setup, include=FALSE, message=F,warning=F}
-knitr::opts_chunk$set(message=F,warning=F, fig.width = 12, fig.height = 10)
+knitr::opts_chunk$set(message=F,warning=F, fig.width = 14, fig.height = 10)
 
 options(scipen = 999,
         digits = 4)
@@ -201,10 +201,39 @@ for (i in 1:12){
 
 ```{r regions}
 
+pres_names <- read_csv('pressure_names.csv')
+
+df = df%>%left_join(pres_names,by='pressure')%>%
+      mutate(rgn = ifelse(rgn == "United States Oregon", "Oregon",
+                   ifelse(rgn == "United States Central California","Central California",
+                   ifelse(rgn == "United States Washington", "Washington",
+                   ifelse(rgn == "United States New England","New England",
+                   ifelse(rgn == "United States Gulf of Mexico","Gulf of Mexico",
+                   ifelse(rgn == "United States Alaska Arctic","Alaska Arctic",
+                   ifelse(rgn == "Puerto Rico and Virgin Islands of the United States","Puerto Rico & US Virgin Islands",
+                   ifelse(rgn == "United States Hawaii","Hawaii",
+                   ifelse(rgn == "United States Northern California","Northern California",
+                   ifelse(rgn == "United States Southern California","Southern California",
+                   ifelse(rgn == "United States South Atlantic","South Atlantic",
+                   ifelse(rgn == "United States Alaska Pacific","Alaska Pacific",
+                   ifelse(rgn == "United States Mid Atlantic","Mid-Atlantic",rgn))))))))))))))%>%
+      mutate(rgn_wrap = str_wrap(rgn, width = 20))
+
 #by pressure
 df$cat <- factor(df$cat, levels = rev(c("verylow","low","medium","high","veryhigh")))
-ggplot(df,aes(x = rgn,y = perc,fill = factor(cat)))+
-         geom_bar(position = 'stack',stat = 'identity', alpha = 1) +
+
+#climate change
+cc <- df%>%filter(pressure %in% c('sst','uv','ocean_acidification'))
+#fisheries
+fis <- df%>%filter(pressure %in% c('artisanal_fishing','demersal_destructive_fishing','demersal_nondest_high_bycatch','demersal_nondest_low_bycatch',
+                                   'pelagic_low_bycatch','pelagic_high_bycatch'))
+#pollution
+pol <- df%>%filter(pressure %in% c('inorganic','plumes_fert','plumes_pest'))
+ 
+# function to plot each of the datasets 
+perc_plot <- function(data){ 
+  ggplot(data) + 
+    geom_bar(aes(x = rgn,y = perc,fill = factor(cat)),position = 'stack',stat = 'identity', alpha = 1) +
   scale_fill_manual(values = c('verylow' = '#4dac26',
                                'low' = '#b8e186', 
                                'medium' = '#f1b6da',
@@ -215,46 +244,70 @@ ggplot(df,aes(x = rgn,y = perc,fill = factor(cat)))+
                     guide = guide_legend(reverse = TRUE))) +
     coord_flip()+
   labs(y = "Percent of region's area")+
-  facet_wrap(~pressure)
+  facet_wrap(~displayName)+
+  theme(text = element_text(size = 14),
+        axis.title.y=element_blank(),
+        axis.text=element_text(size=14))
+}
 
+perc_plot(pol)
+perc_plot(cc)
+perc_plot(fis)
 ```
 
+```{r mci_rgns datatable}
+#create small dataframe that assigns each pressure a short name for display purposes
+s <- data.frame(pressure = unique(df$pressure),
+                short    = c("art","ddf","dnd-hb","dnd-lb","inorganic","oa","pel-hb","pel-lb","fert","pest","sst","uv"))
+
+df_dt = df%>%
+        mutate(shortname = s$short[match(pressure,s$pressure)])%>%
+        dplyr::select(perc,cat,rgn,shortname)
+
+DT::datatable(df_dt)
+
+```
 
 ```{r avg_impact}
 
 avg <- df%>%
-       dplyr::select(pressure,rgn,mean)%>%
+       dplyr::select(pressure,rgn,rgn_wrap,mean,displayName)%>%
         unique()
 
 #expand color palette
 colourCount = length(unique(avg$pressure))
 getPalette = colorRampPalette(brewer.pal(9, "Set1"))
 
-ggplot(avg) + geom_bar(aes(y = mean, x = reorder(rgn,-mean),fill = factor(pressure)), stat = "identity")+
+ggplot(avg) + geom_bar(aes(y = mean, x = reorder(rgn_wrap,-mean),fill = factor(displayName)), stat = "identity")+
   theme(axis.text.x = element_text(angle = 70, hjust = 1))+
   labs(x = "Region",
        y = "Mean Impact Score",
        title = "All Pressures") + 
-  scale_fill_manual("Pressure",values = getPalette(colourCount))
+  scale_fill_manual("Pressure",values = getPalette(colourCount))+
+  theme(text = element_text(size = 12),
+        axis.text=element_text(size=12),
+        legend.justification = c(1, 1), 
+        legend.position = c(1, 1))
 
 #without climate stressors
 climate  = c("sst","uv","ocean_acidification")
 avg_noclim <- avg%>%
                 filter(!pressure%in% climate)
 
-ggplot(avg_noclim) + geom_bar(aes(y = mean, x = reorder(rgn,-mean), fill = factor(pressure)), stat = "identity")+
+ggplot(avg_noclim) + geom_bar(aes(y = mean, x = reorder(rgn_wrap,-mean), fill = factor(displayName)), stat = "identity")+
   theme(axis.text.x = element_text(angle = 70, hjust = 1))+
   labs(x = "Region",
        y = "Mean Impact Score",
        title = "Without climate pressures") + 
-  scale_fill_manual("Pressure",values = getPalette(colourCount))
+  scale_fill_manual("Pressure",values = getPalette(colourCount))+
+  theme(text = element_text(size = 12),
+        axis.text=element_text(size=12),
+        legend.justification = c(1, 1), 
+        legend.position = c(1, 1))
 
 ```
 
 ```{r datatable}
-#create small dataframe that assigns each pressure a short name for display purposes
-s <- data.frame(pressure = unique(df$pressure),
-                short    = c("art","ddf","dnd-hb","dnd-lb","inorganic","oa","pel-hb","pel-lb","fert","pest","sst","uv"))
 
 avg_dt = avg%>%
         mutate(shortname = s$short[match(pressure,s$pressure)])%>%
