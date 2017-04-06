@@ -11,3 +11,9 @@ plumes_fert,Nutrient Pollution
 plumes_pest,Organic Pollution
 sst,Sea Surface Temperature
 uv,Ultraviolet Radiation
+slr, Sea Level Rise
+ocean_pollution, Ocean Pollution
+shipping, Shipping
+invasives, Invasive Species
+oil_rigs, Oil Rigs
+night_lights, Night Lights
