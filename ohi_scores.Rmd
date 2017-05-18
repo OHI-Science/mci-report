@@ -31,7 +31,8 @@ score_files <- sprintf('~/github/ohi-global/eez%s/scores.csv', 2012:2016) %>%
 
 score_rgns <- read_csv('~/github/ohi-global/eez2013/layers/rgn_labels.csv') %>%
   select(rgn_id, rgn_name = label) %>%
-  filter(rgn_id %in% c(163, 218))
+  filter(rgn_id %in% c(163, 218)) %>%
+  bind_rows(data.frame(rgn_id = 0, rgn_name = 'Global'))
 
 scores <- lapply(score_files, read_csv) %>%
   setNames(names(score_files)) %>%
@@ -160,7 +161,8 @@ status_by_rgn <- ggplot(scores1 %>% filter(goal_type == 'goal'),
                         aes(x = year, y = status, color = label, group = goal)) +
   # theme_bw() +
   theme(panel.grid.minor = element_blank(),
-        panel.border = element_blank()) +
+        panel.border = element_blank(),
+        text = element_text(size = 8)) +
   geom_line(size = 1.5, alpha = .8) +
   # geom_line(data = scores1 %>% filter(goal_type == 'subgoal_dash'), 
   #           linetype = 2, size = .75, alpha = .8) +
@@ -170,9 +172,12 @@ status_by_rgn <- ggplot(scores1 %>% filter(goal_type == 'goal'),
   # geom_line(aes(y = score), linetype = 1) +
   scale_color_manual(values = pal) + 
   scale_y_continuous(limits = c(0, 100)) +
+  labs(color = 'Goal') +
   facet_wrap(~ rgn_name)
 
 print(status_by_rgn)
+
+ggsave('goals_by_rgn.png', width = 8, height = 4, units = 'in')
 
 ```
 
