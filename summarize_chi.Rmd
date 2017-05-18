@@ -7,7 +7,7 @@ output:
 ---
 
 ```{r setup, include=FALSE, message=F,warning=F}
-knitr::opts_chunk$set(message=F,warning=F, fig.width = 14, fig.height = 10)
+knitr::opts_chunk$set(message=F,warning=F, fig.width = 14, fig.height = 12)
 
 options(scipen = 999,
         digits = 4)
@@ -146,6 +146,13 @@ quant_func <- function(layer){
 }
 
 
+```
+
+
+```{r, quantify_area_in_cats}
+
+if(!file.exists("mci-rgns-data.csv")){
+  
 #quants is a list of length 12, one for each pressure layer. Each layer has 5 quantiles
 quants = map(mci_prs_vals,quant_func)
 q = quants%>%
@@ -161,17 +168,12 @@ q = quants%>%
                  veryhigh = `97.5%`)%>%
           dplyr::select(pressure, verylow, low, medium, high, veryhigh)
 
-```
-
-
-```{r, quantify_area_in_cats}
-
 df = data.frame()
 
 for (i in 1:length(layers)){
    
      #get the pressure name
-     for (j in 1:26){
+     for (j in 1:28){
        
      pres_name = names(mci_prs_vals[i])
      region   = names(mci_prs_vals[[i]])[j]
@@ -202,11 +204,17 @@ for (i in 1:length(layers)){
      }
  }
 
+write_csv(df,path = 'mci-rgns-data.csv')
+}else{
+  df = read_csv('mci-rgns-data.csv')
+}
+
+
 ```
 
 ### Proportional area and impact of stressors across all regions
 
-```{r regions}
+```{r regions, fig.width = 16, fig.height = 16}
 
 pres_names <- read_csv('pressure_names.csv')
 
@@ -214,7 +222,7 @@ df = df%>%left_join(pres_names,by='pressure')%>%
       mutate(rgn = ifelse(rgn == "United States Oregon", "Oregon",
                    ifelse(rgn == "United States Central California","Central California",
                    ifelse(rgn == "United States Washington", "Washington",
-                   ifelse(rgn == "United States New England","New England",
+                   ifelse(rgn == "United States New England","US Northeast",
                    ifelse(rgn == "United States Gulf of Mexico","Gulf of Mexico",
                    ifelse(rgn == "United States Alaska Arctic","Alaska Arctic",
                    ifelse(rgn == "Puerto Rico and Virgin Islands of the United States","Puerto Rico & US Virgin Islands",
@@ -223,7 +231,9 @@ df = df%>%left_join(pres_names,by='pressure')%>%
                    ifelse(rgn == "United States Southern California","Southern California",
                    ifelse(rgn == "United States South Atlantic","South Atlantic",
                    ifelse(rgn == "United States Alaska Pacific","Alaska Pacific",
-                   ifelse(rgn == "United States Mid Atlantic","Mid-Atlantic",rgn))))))))))))))%>%
+                   ifelse(rgn == "United States Mid Atlantic","Mid-Atlantic",
+                   ifelse(rgn == "United States West Coast","West Coast",
+                   ifelse(rgn == "United States Mid-North East Coast","Mid-Atl. & Northeast",rgn))))))))))))))))%>%
       mutate(rgn_wrap = str_wrap(rgn, width = 20),
              displayName_w = str_wrap(displayName,width = 30),
              perc = perc*100)
@@ -258,9 +268,10 @@ perc_plot <- function(data){
     coord_flip()+
   labs(y = "Percent of region's area")+
   facet_wrap(~displayName_w)+
-  theme(text = element_text(size = 14),
+  theme(text = element_text(size = 16),
         axis.title.y=element_blank(),
-        axis.text=element_text(size=14))
+        axis.text=element_text(size=14),
+        legend.text=element_text(size=16))
 }
 
 perc_plot(cc)
@@ -303,7 +314,7 @@ ggplot(avg) + geom_bar(aes(y = mean, x = reorder(rgn_wrap,-mean),fill = factor(d
         axis.text=element_text(size=14),
         legend.justification = c(1, 1), 
         legend.position = c(1, 1))+
-  guides(fill=guide_legend(ncol=2))
+  guides(fill=guide_legend(ncol=2))+ylim(0,6)
 
 #plot the same but without climate stressors
 climate  = c("sst","uv","ocean_acidification","slr")
@@ -529,7 +540,7 @@ ggplot(avg) + geom_bar(aes(y = mean, x = reorder(rgn_wrap,-mean),fill = factor(d
         axis.text=element_text(size=12),
         legend.justification = c(1, 1), 
         legend.position = c(1, 1),
-        legend.text=element_text(size=8))+
+        legend.text=element_text(size=10))+
   guides(fill=guide_legend(ncol=2))+ylim(0,4.5)
 
 #same plot but without climate pressures
@@ -547,7 +558,7 @@ ggplot(avg_noclim) + geom_bar(aes(y = mean, x = reorder(rgn_wrap,-mean),fill = f
         axis.text=element_text(size=12),
         legend.justification = c(1, 1), 
         legend.position = c(1, 1),
-        legend.text=element_text(size=8))
+        legend.text=element_text(size=10))
 
 
 ```
@@ -741,7 +752,7 @@ ggplot(avg) + geom_bar(aes(y = mean, x = reorder(rgn,-mean),fill = factor(displa
         legend.justification = c(1, 1), 
         legend.position = c(1, 1),
         legend.text=element_text(size=8))+
-  guides(fill=guide_legend(ncol=2))+ ylim(0, 5)
+  guides(fill=guide_legend(ncol=2))+ ylim(0, 7.5)
 
 #do the same but without climate pressures
 
